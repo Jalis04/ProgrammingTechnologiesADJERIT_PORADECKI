@@ -1,0 +1,15 @@
+E:\c#\Programming Technologies\Task_0\Bank\bin\Debug\net6.0\BankAccount.exe
+E:\c#\Programming Technologies\Task_0\Bank\bin\Debug\net6.0\BankAccount.deps.json
+E:\c#\Programming Technologies\Task_0\Bank\bin\Debug\net6.0\BankAccount.runtimeconfig.json
+E:\c#\Programming Technologies\Task_0\Bank\bin\Debug\net6.0\BankAccount.dll
+E:\c#\Programming Technologies\Task_0\Bank\bin\Debug\net6.0\BankAccount.pdb
+E:\c#\Programming Technologies\Task_0\Bank\obj\Debug\net6.0\BankAccount.csproj.AssemblyReference.cache
+E:\c#\Programming Technologies\Task_0\Bank\obj\Debug\net6.0\BankAccount.GeneratedMSBuildEditorConfig.editorconfig
+E:\c#\Programming Technologies\Task_0\Bank\obj\Debug\net6.0\BankAccount.AssemblyInfoInputs.cache
+E:\c#\Programming Technologies\Task_0\Bank\obj\Debug\net6.0\BankAccount.AssemblyInfo.cs
+E:\c#\Programming Technologies\Task_0\Bank\obj\Debug\net6.0\BankAccount.csproj.CoreCompileInputs.cache
+E:\c#\Programming Technologies\Task_0\Bank\obj\Debug\net6.0\BankAccount.dll
+E:\c#\Programming Technologies\Task_0\Bank\obj\Debug\net6.0\refint\BankAccount.dll
+E:\c#\Programming Technologies\Task_0\Bank\obj\Debug\net6.0\BankAccount.pdb
+E:\c#\Programming Technologies\Task_0\Bank\obj\Debug\net6.0\BankAccount.genruntimeconfig.cache
+E:\c#\Programming Technologies\Task_0\Bank\obj\Debug\net6.0\ref\BankAccount.dll
