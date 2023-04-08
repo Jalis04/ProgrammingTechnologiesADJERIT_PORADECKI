@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CoffeeShop.DataLayer;
+using DataLayer;
 
-namespace CoffeeShop.LogicLayer
+namespace LogicLayer
 {
     public class CoffeeShopAPI
     {

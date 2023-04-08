@@ -1,24 +1,24 @@
-﻿using CoffeeShop.DataLayer;
+﻿using DataLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoffeeShop.LogicLayer
+namespace LogicLayer
 {
     public class CoffeeShopLogic
     {
         private ProductCatalog catalog;
         private List<Invoice> invoices;
-        private string libraryStatus;
+        private string coffeeShopStatus;
         private string inventoryStatus;
 
         public CoffeeShopLogic()
         {
             catalog = new ProductCatalog();
             invoices = new List<Invoice>();
-            libraryStatus = "Closed"; //example statuses
+            coffeeShopStatus = "Closed"; //example statuses
             inventoryStatus = "Closed";
         }
 
@@ -39,7 +39,7 @@ namespace CoffeeShop.LogicLayer
 
         public void UpdateLibraryStatus(string status)
         {
-            libraryStatus = status;
+            coffeeShopStatus = status;
         }
 
         public void UpdateInventoryStatus(string status)
