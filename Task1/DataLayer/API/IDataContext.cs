@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicLayer
+namespace DataLayer.API
 {
-    public class Invoice
+    internal interface IDataContext
     {
-        // Properties of the invoice
-
     }
 }

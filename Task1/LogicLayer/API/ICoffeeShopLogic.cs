@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataLayer;
+using LogicLayer.Implementation;
 
-namespace LogicLayer
+namespace LogicLayer.API
 {
-    public class CoffeeShopAPI
+    public class ICoffeeShopLogic
     {
         private CoffeeShopLogic logic;
-        public CoffeeShopAPI()
+        public ICoffeeShopLogic()
         {
             logic = new CoffeeShopLogic();
         }

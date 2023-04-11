@@ -5,18 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicLayer
+namespace LogicLayer.Implementation
 {
     public class CoffeeShopLogic
     {
-        private ProductCatalog catalog;
+        private Catalog catalog;
         private List<Invoice> invoices;
         private string coffeeShopStatus;
         private string inventoryStatus;
 
         public CoffeeShopLogic()
         {
-            catalog = new ProductCatalog();
+            catalog = new Catalog();
             invoices = new List<Invoice>();
             coffeeShopStatus = "Closed"; //example statuses
             inventoryStatus = "Closed";

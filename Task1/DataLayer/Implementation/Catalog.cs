@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    public class ProductCatalog
+    public class Catalog
     {
         private List<Product> products;
 
-        public ProductCatalog()
+        public Catalog()
         {
             products = new List<Product>();
         }
