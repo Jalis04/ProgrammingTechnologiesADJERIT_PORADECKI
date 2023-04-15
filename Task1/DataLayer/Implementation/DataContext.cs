@@ -7,20 +7,12 @@ using DataLayer.API;
 
 namespace DataLayer.Implementation
 {
-    public class DataContext : IDataContext
+    internal class DataContext : IDataContext
     {
-        public ICatalog Catalog { get; }
-        public IList<Client> Clients { get; }
-        public IList<Invoice> Invoices { get; }
-        public string ProcessState { get; set; }
-
-        public DataContext()
-        {
-            Catalog = new Catalog();
-            Clients = new List<Client>();
-            Invoices = new List<Invoice>();
-            ProcessState = "Open";
-        }
+        internal Dictionary<string, ICatalog> catalogs = new();
+        internal List<IEvent> events = new();
+        internal List<IState> states = new();
+        internal List<IUsers> users = new();
     }
 
 }

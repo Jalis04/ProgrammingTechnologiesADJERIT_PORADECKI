@@ -8,10 +8,8 @@ namespace DataLayer.API
 {
     public interface IUser
     {
-        string Id { get; }
-        string FirstName { get; set; }
-        string LastName { get; set; }
-        string Email { get; set; }
+        int Id { get; }
+        string Name { get; }
     }
 
 }

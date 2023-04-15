@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataLayer.API;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,14 +7,16 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Implementation
 {
-    public class InvoiceCreatedEvent : IEvent
+    public class Event : IEvent
     {
-        public string Id { get; set; }
-        public DateTime Timestamp { get; set; }
-        public decimal Amount { get; set; }
-        public string ClientId { get; set; }
-        
+        public DateTime Timestamp { get; }
+        public string Description { get; }
 
-        //No implemented method yet
+        public Event(string description)
+        {
+            Timestamp = DateTime.Now;
+            Description = description;
+        }
     }
 }
+

@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataLayer.API
 {
-    public interface IEvent
+    public abstract class IFill
     {
-        string StateId { get; }
-        string UserId { get; }
+        public abstract void Fill(IDataRepository dataRepository);
     }
-
 }

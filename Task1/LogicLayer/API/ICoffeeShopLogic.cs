@@ -4,46 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataLayer;
+using DataLayer.API;
 using LogicLayer.Implementation;
 
 namespace LogicLayer.API
 {
-    public class ICoffeeShopLogic
+    public abstract class ICoffeeShopLogic
     {
-        private CoffeeShopLogic logic;
-        public ICoffeeShopLogic()
-        {
-            logic = new CoffeeShopLogic();
-        }
-        public void AddProduct(Product product)
-        {
-            logic.AddProduct(product);
-        }
-        public void RemoveProduct(Product product)
-        {
-            logic.RemoveProduct(product);
-        }
-        public void RegisterInvoice(Invoice invoice)
-        {
-            logic.RegisterInvoice(invoice);
-        }
-        public void UpdateLibraryStatus(string status)
-        {
-            logic.UpdateLibraryStatus(status);
-        }
-        public void UpdateInventoryStatus(string status)
-        {
-            logic.UpdateInventoryStatus(status);
-        }
+        public abstract void AddOrder(string userId, string stateId);
 
-        public int GetProductCount()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void PayOrder(string userId, string stateId);
 
-        public Product GetProductByName(string v)
+        public static ICoffeeShopLogic CreateLogic(IDataRepository? dataRepository = default)
         {
-            throw new NotImplementedException();
+            return new CoffeeShopLogic(dataRepository ?? IDataRepository.CreateDataRepository());
         }
         // Other methods for handling shop operations
     }

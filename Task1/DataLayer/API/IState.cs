@@ -8,8 +8,9 @@ namespace DataLayer.API
 {
     public interface IState
     {
-        string Id { get; }
-        string Name { get; set; }
-        string Description { get; set; }
+        string DrinkId { get; }
+        string StateId { get; set; }
+
+        bool Available { get; set; }
     }
 }

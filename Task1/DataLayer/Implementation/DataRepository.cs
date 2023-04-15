@@ -3,56 +3,201 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using System.IO;
+using DataLayer.API;
 
 namespace DataLayer.Implementation
 {
-    public class DataRepository : IDataRepository
+    internal class DataRepository : IDataRepository
     {
-        private readonly ICatalog _catalog;
-        private readonly IList<Client> _clients;
-        private readonly IList<Invoice> _invoices;
-        private string _processState;
+        private readonly DataContext dataContext;
 
-        public DataRepository(ICatalog catalog, IList<Client> clients, IList<Invoice> invoices, string processState)
+        public DataRepository(IFill dataFill)
         {
-            _catalog = catalog;
-            _clients = clients;
-            _invoices = invoices;
-            _processState = processState;
+            dataContext = new DataContext();
+            dataFill.Fill(this);
         }
 
-        public ICatalog Catalog => _catalog;
-
-        public IList<Client> Clients => _clients;
-
-        public IList<Invoice> Invoices => _invoices;
-
-        public string ProcessState
+        public override void AddUser(IUsers u)
         {
-            get => _processState;
-            set => _processState = value;
+            dataContext.users.Add(u);
         }
 
-        public void SaveChanges()
-        {   //METHOD NOT NEEDED, JUST EXPERIMENTAL
-            // Implementation of saving changes to the data repository
-            // Serialize the catalog, clients, invoices, and process state to JSON strings
-            string catalogJson = JsonConvert.SerializeObject(Catalog);
-            string clientsJson = JsonConvert.SerializeObject(Clients);
-            string invoicesJson = JsonConvert.SerializeObject(Invoices);
-            string processStateJson = JsonConvert.SerializeObject(ProcessState);
+        public override IUsers GetUser(string id)
+        {
+            return dataContext.users.Single(u => u.Id == id);
+        }
 
-            // Write the JSON strings to a file
-            using (StreamWriter file = File.CreateText("data.json"))
+        public override IEnumerable<IUsers> GetAllUsers()
+        {
+            return dataContext.users;
+        }
+
+        public override void DeleteUser(IUsers u) //if we have a user. 
+        {
+            //int RentCount = 0;
+            int OrderCount = 0;
+            int PaidOrderCount = 0;
+            foreach (var e in dataContext.events.OfType<IOrder>())
+                if (e.UserId == u.Id)
+                    OrderCount++;
+            foreach (var e in dataContext.events.OfType<IPayOrder>())
+                if (e.UserId == u.Id)
+                    PaidOrderCount++;
+            if (OrderCount != PaidOrderCount)
+                throw new Exception("User has an unpaid order, cannot be deleted.");
+            dataContext.users.Remove(u);
+        }
+        //---------------------------------------------
+        public override void DeleteUserWithId(string id)
+        {
+            int OrderCount = 0;
+            int PaidOrderCount = 0;
+            foreach (var e in dataContext.events.OfType<IOrder>())
+                if (e.UserId == id)
+                    OrderCount++;
+            foreach (var e in dataContext.events.OfType<IPayOrder>())
+                if (e.UserId == id)
+                    PaidOrderCount++;
+            if (OrderCount != PaidOrderCount)
+                throw new Exception("User has an unpaid order, cannot be deleted.");
+            dataContext.users.Remove(dataContext.users.Single(u => u.Id == id));
+        }
+        //------------------------------------------------
+        public override bool UserExists(string id)
+        {
+            foreach (var user in dataContext.users)
             {
-                file.WriteLine(catalogJson);
-                file.WriteLine(clientsJson);
-                file.WriteLine(invoicesJson);
-                file.WriteLine(processStateJson);
+                if (user.Id == id) return true;
+            }
+            return false;
+        }
+
+        public override void AddCatalog(ICatalog c)
+        {
+            dataContext.catalogs.Add(c.Id, c);
+        }
+
+        public override ICatalog GetCatalog(string id)
+        {
+            return dataContext.catalogs[id];
+        }
+
+        public override IEnumerable<ICatalog> GetAllCatalogs()
+        {
+            return dataContext.catalogs.Values;
+        }
+
+        public override void DeleteCatalogWithId(string id)
+        {
+            foreach (var s in dataContext.states)
+                if (s.DrinkId == id)
+                    throw new Exception("Cannot remove object. Is in use by State");
+            dataContext.catalogs.Remove(id);
+        }
+
+        public override void DeleteCatalog(ICatalog c) // If we have a catalog.
+        {
+            foreach (var s in dataContext.states)
+                if (s.DrinkId == c.Id)
+                    throw new Exception("Cannot remove object. Currently in use by State");
+
+            dataContext.catalogs.Remove(c.Id);
+        }
+
+        public override bool CatalogExists(string id)
+        {
+            return dataContext.catalogs.ContainsKey(id);
+        }
+
+        public override void AddEvent(IEvent e)
+        {
+            dataContext.events.Add(e);
+        }
+
+        public override IEnumerable<IEvent> GetAllEvents()
+        {
+            return dataContext.events;
+        }
+
+        public override void DeleteEvent(IEvent e)
+        {
+            foreach (var ee in dataContext.events)
+                if (e.Equals(ee))
+                {
+                    dataContext.events.Remove(e);
+                    return;
+                }
+
+            throw new Exception("There is no such event");
+        }
+        public override void AddState(IState s)
+        {
+            dataContext.states.Add(s);
+        }
+
+        public override IState GetState(string id)
+        {
+            return dataContext.states.Single(s => s.StateId == id);
+        }
+
+        public override IEnumerable<IState> GetAllStates()
+        {
+            return dataContext.states;
+        }
+
+        public override void DeleteState(IState s) // If we have a state
+        {
+            foreach (var e in dataContext.events)
+                if (e.StateId == s.StateId)
+                    throw new Exception("State is in use");
+            dataContext.states.Remove(s);
+        }
+
+        public override void DeleteStateWithId(string id)
+        {
+            foreach (var e in dataContext.events)
+                if (e.StateId == id)
+                    throw new Exception("State is in use");
+            dataContext.states.Remove(dataContext.states.Single(s => s.StateId == id));
+        }
+
+        public override bool StateExists(string id)
+        {
+            foreach (var state in dataContext.states)
+            {
+                if (state.StateId == id) return true;
+            }
+            return false;
+        }
+
+        public override bool IsAvailable(string id)
+        {
+            foreach (var s in dataContext.states)
+            {
+                if (s.StateId == id)
+                {
+                    if (s.Available) return true;
+                }
+            }
+            return false;
+        }
+
+        public override void ChangeAvailability(string id)
+        {
+            foreach (var s in dataContext.states)
+            {
+                if (s.StateId == id)
+                {
+                    if (s.Available)
+                    {
+                        s.Available = false;
+                        break;
+                    }
+                    if (!s.Available) s.Available = true;
+                    break;
+                }
             }
         }
     }
-
 }

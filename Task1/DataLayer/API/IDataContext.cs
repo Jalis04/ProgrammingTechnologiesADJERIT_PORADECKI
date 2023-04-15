@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataLayer.API
 {
-    public interface IDataContext
+    public abstract class IDataContext
     {
-        ICatalog Catalog { get; }
-        IList<Client> Clients { get; }
-        IList<Invoice> Invoices { get; }
-        string ProcessState { get; set; }
+
     }
 
 }

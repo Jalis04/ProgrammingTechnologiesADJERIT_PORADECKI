@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DataLayer.API
 {
-    public interface IEvent
+    public interface IUsers
     {
-        string StateId { get; }
-        string UserId { get; }
+        string FirstName { get; set; }
+        string LastName { get; set; }
+        string Id { get; set; }
     }
-
 }

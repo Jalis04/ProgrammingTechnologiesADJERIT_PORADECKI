@@ -1,52 +1,38 @@
 ﻿using DataLayer;
+using DataLayer.API;
+using DataLayer.Implementation;
+using LogicLayer.API;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace LogicLayer.Implementation
 {
-    public class CoffeeShopLogic
+    internal class CoffeeShopLogic : ICoffeeShopLogic
     {
-        private Catalog catalog;
-        private List<Invoice> invoices;
-        private string coffeeShopStatus;
-        private string inventoryStatus;
+        private IDataRepository DataRepo;
 
-        public CoffeeShopLogic()
+        public CoffeeShopLogic(IDataRepository dataRepo)
         {
-            catalog = new Catalog();
-            invoices = new List<Invoice>();
-            coffeeShopStatus = "Closed"; //example statuses
-            inventoryStatus = "Closed";
+            DataRepo = dataRepo;
         }
 
-        public void AddProduct(Product product)
+        public override void AddOrder(string userId, string stateId)
         {
-            catalog.AddProduct(product);
+            if (!DataRepo.IsAvailable(stateId)) throw new InvalidOperationException("Can't order a product that isn't available");
+            IOrder order = new Order(stateId, userId);
+            DataRepo.AddEvent(order);
+            DataRepo.ChangeAvailability(stateId);
         }
 
-        public void RemoveProduct(Product product)
+        public override void PayOrder(string userId, string stateId)
         {
-            catalog.RemoveProduct(product);
+            if (DataRepo.IsAvailable(stateId)) throw new InvalidOperationException("Can't pay an order that doesn't exist");
+            DataRepo.AddEvent(new PayOrder(stateId, userId));
+            DataRepo.ChangeAvailability(stateId);
         }
-
-        public void RegisterInvoice(Invoice invoice)
-        {
-            invoices.Add(invoice);
-        }
-
-        public void UpdateLibraryStatus(string status)
-        {
-            coffeeShopStatus = status;
-        }
-
-        public void UpdateInventoryStatus(string status)
-        {
-            inventoryStatus = status;
-        }
-
-        // Other methods for handling shop operations
     }
 }

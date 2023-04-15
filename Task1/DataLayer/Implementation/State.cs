@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataLayer.API;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,18 +7,21 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Implementation
 {
-    public class State : IState
+    internal class State : IState
     {
-        public string Id { get; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        private readonly ICatalog catalog;
 
-        public State(string id, string name, string description)
+        public State(string stateId, ICatalog catalog)
         {
-            Id = id;
-            Name = name;
-            Description = description;
+            StateId = stateId;
+            this.catalog = catalog;
+            Available = true;
         }
+
+        public string DrinkId => catalog.Id;
+        public string StateId { get; set; }
+
+        public bool Available { get; set; }
     }
 
 }

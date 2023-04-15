@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataLayer.API
 {
-    public interface IEvent
+    public interface IPayOrder : IEvent
     {
         string StateId { get; }
         string UserId { get; }
     }
-
 }

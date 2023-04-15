@@ -8,10 +8,8 @@ namespace DataLayer.API
 {
     public interface ICatalog
     {
-        IEnumerable<Product> GetProducts();
-        Product GetProductById(int id);
-        void AddProduct(Product product);
-        void UpdateProduct(Product product);
-        void RemoveProduct(int id);
+        string ProductName { get; set; }
+        string Description { get; set; }
+        string Id { get; set; }
     }
 }

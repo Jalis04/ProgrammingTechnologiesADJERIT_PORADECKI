@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace DataLayer.API
 {
     public interface IProduct
-    {
+    {   
+        //represents drinks in the coffee shop
         string Id { get; }
         string Name { get; }
         string Description { get; }
