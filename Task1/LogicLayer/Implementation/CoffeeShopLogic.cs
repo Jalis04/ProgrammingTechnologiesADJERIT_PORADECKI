@@ -1,38 +1,32 @@
-﻿using DataLayer;
+﻿using DataLayer.Implementation;
 using DataLayer.API;
-using DataLayer.Implementation;
 using LogicLayer.API;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 
 namespace LogicLayer.Implementation
 {
     internal class CoffeeShopLogic : ICoffeeShopLogic
     {
-        private IDataRepository DataRepo;
+        private IDataRepository dataRepository;
 
+        //Dependency Injection
         public CoffeeShopLogic(IDataRepository dataRepo)
         {
-            DataRepo = dataRepo;
+            dataRepository = dataRepo;
         }
 
-        public override void AddOrder(string userId, string stateId)
+        public override void PlaceOrder(string userId, string stateId)
         {
-            if (!DataRepo.IsAvailable(stateId)) throw new InvalidOperationException("Can't order a product that isn't available");
-            IOrder order = new Order(stateId, userId);
-            DataRepo.AddEvent(order);
-            DataRepo.ChangeAvailability(stateId);
+            if (!dataRepository.IsAvailable(stateId)) throw new InvalidOperationException("Cannot order nothing");
+            IEvent rent = new PlaceOrderEvent(stateId, userId);
+            dataRepository.AddEvent(rent);
+            dataRepository.ChangeAvailability(stateId);
         }
 
         public override void PayOrder(string userId, string stateId)
         {
-            if (DataRepo.IsAvailable(stateId)) throw new InvalidOperationException("Can't pay an order that doesn't exist");
-            DataRepo.AddEvent(new PayOrder(stateId, userId));
-            DataRepo.ChangeAvailability(stateId);
+            if (dataRepository.IsAvailable(stateId)) throw new InvalidOperationException("Cannot pay if there are no orders");
+            dataRepository.AddEvent(new PayOrderEvent(stateId, userId));
+            dataRepository.ChangeAvailability(stateId);
         }
     }
 }

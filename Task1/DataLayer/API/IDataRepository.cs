@@ -1,37 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
-using DataLayer.Implementation;
-
-[assembly: InternalsVisibleTo("Tests")]
+﻿using DataLayer.Implementation;
 
 namespace DataLayer.API
-{
+{   //We store all data manipulation methods here for use with Dependency Injection
     public abstract class IDataRepository
     {
-        public abstract void AddUser(IUsers u);
-        public abstract IUsers GetUser(string id);
-        public abstract IEnumerable<IUsers> GetAllUsers();
+        public static IDataRepository CreateDataRepository(IFill? fill = default)
+        {
+            return new DataRepository(fill ?? new EmptyFill());
+        }
 
-        public abstract void DeleteUser(IUsers u); //if we have a user. 
+        //User methods
+        public abstract void AddUser(IUser u);
+        public abstract IUser GetUser(string id);
+        public abstract IEnumerable<IUser> GetAllUsers();
+
+        public abstract void DeleteUser(IUser u);   
         public abstract void DeleteUserWithId(string id);
         public abstract bool UserExists(string id);
 
+        //Product methods
+        public abstract void AddProduct(IProduct c);
+        public abstract IProduct GetProduct(string id);
+        public abstract IEnumerable<IProduct> GetAllProducts();
+        public abstract void DeleteProductWithId(string id);
+        public abstract void DeleteProduct(IProduct c); // If we have a catalog.
+        public abstract bool ProductExists(string id);
 
-        public abstract void AddCatalog(ICatalog c);
-        public abstract ICatalog GetCatalog(string id);
-        public abstract IEnumerable<ICatalog> GetAllCatalogs();
-        public abstract void DeleteCatalogWithId(string id);
-        public abstract void DeleteCatalog(ICatalog c); // If we have a catalog.
-        public abstract bool CatalogExists(string id);
-
-        public abstract void AddEvent(IEvent e);
-        public abstract IEnumerable<IEvent> GetAllEvents();
-        public abstract void DeleteEvent(IEvent e);
-
+        //State methods
         public abstract void AddState(IState s);
         public abstract IState GetState(string id);
         public abstract IEnumerable<IState> GetAllStates();
@@ -41,10 +36,12 @@ namespace DataLayer.API
         public abstract bool IsAvailable(string id);
         public abstract void ChangeAvailability(string id);
 
-        public static IDataRepository CreateDataRepository(IFill? fill = default)
-        {
-            return new DataRepository(fill ?? new EmptyFill());
-        }
-    }
+        //Event methods
 
+        public abstract void AddEvent(IEvent e);
+        public abstract IEnumerable<IEvent> GetAllEvents();
+        public abstract void DeleteEvent(IEvent e);
+
+
+    }
 }

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataLayer.API
+﻿namespace DataLayer.API
 {
     public interface IUser
     {
-        int Id { get; }
-        string Name { get; }
+        string firstName { get; set; }
+        string lastName { get; set; }
+        string id { get; set; }
     }
-
 }

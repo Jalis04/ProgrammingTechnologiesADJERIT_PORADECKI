@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using DataLayer.API;
+﻿using DataLayer.API;
 
 namespace DataLayer.Implementation
 {
-    internal class DataRepository : IDataRepository
+    public class DataRepository : IDataRepository
     {
         private readonly DataContext dataContext;
 
@@ -18,96 +12,95 @@ namespace DataLayer.Implementation
             dataFill.Fill(this);
         }
 
-        public override void AddUser(IUsers u)
+        public override void AddUser(IUser u)
         {
             dataContext.users.Add(u);
         }
 
-        public override IUsers GetUser(string id)
+        public override IUser GetUser(string id)
         {
-            return dataContext.users.Single(u => u.Id == id);
+            return dataContext.users.Single(u => u.id == id);
         }
 
-        public override IEnumerable<IUsers> GetAllUsers()
+        public override IEnumerable<IUser> GetAllUsers()
         {
             return dataContext.users;
         }
 
-        public override void DeleteUser(IUsers u) //if we have a user. 
+        public override void DeleteUser(IUser u) //if we have a user. 
         {
-            //int RentCount = 0;
-            int OrderCount = 0;
-            int PaidOrderCount = 0;
-            foreach (var e in dataContext.events.OfType<IOrder>())
-                if (e.UserId == u.Id)
-                    OrderCount++;
-            foreach (var e in dataContext.events.OfType<IPayOrder>())
-                if (e.UserId == u.Id)
-                    PaidOrderCount++;
-            if (OrderCount != PaidOrderCount)
+            int placed = 0;
+            int paid = 0;
+            foreach (var e in dataContext.events.OfType<PlaceOrderEvent>())
+                if (e.userId == u.id)
+                    placed++;
+            foreach (var e in dataContext.events.OfType<PayOrderEvent>())
+                if (e.userId == u.id)
+                    paid++;
+            if (placed != paid)
                 throw new Exception("User has an unpaid order, cannot be deleted.");
             dataContext.users.Remove(u);
         }
-        //---------------------------------------------
+
         public override void DeleteUserWithId(string id)
         {
-            int OrderCount = 0;
-            int PaidOrderCount = 0;
-            foreach (var e in dataContext.events.OfType<IOrder>())
-                if (e.UserId == id)
-                    OrderCount++;
-            foreach (var e in dataContext.events.OfType<IPayOrder>())
-                if (e.UserId == id)
-                    PaidOrderCount++;
-            if (OrderCount != PaidOrderCount)
-                throw new Exception("User has an unpaid order, cannot be deleted.");
-            dataContext.users.Remove(dataContext.users.Single(u => u.Id == id));
+            int placed = 0;
+            int paid = 0;
+            foreach (var e in dataContext.events.OfType<PlaceOrderEvent>())
+                if (e.userId == id)
+                    placed++;
+            foreach (var e in dataContext.events.OfType<PayOrderEvent>())
+                if (e.userId == id)
+                    paid++;
+            if (placed != paid)
+                throw new Exception("User has an unreturned book, cannot be deleted.");
+            dataContext.users.Remove(dataContext.users.Single(u => u.id == id));
         }
-        //------------------------------------------------
+
         public override bool UserExists(string id)
         {
             foreach (var user in dataContext.users)
             {
-                if (user.Id == id) return true;
+                if (user.id == id) return true;
             }
             return false;
         }
 
-        public override void AddCatalog(ICatalog c)
+        public override void AddProduct(IProduct c)
         {
-            dataContext.catalogs.Add(c.Id, c);
+            dataContext.catalog.Add(c.id, c);
         }
 
-        public override ICatalog GetCatalog(string id)
+        public override IProduct GetProduct(string id)
         {
-            return dataContext.catalogs[id];
+            return dataContext.catalog[id];
         }
 
-        public override IEnumerable<ICatalog> GetAllCatalogs()
+        public override IEnumerable<IProduct> GetAllProducts()
         {
-            return dataContext.catalogs.Values;
+            return dataContext.catalog.Values;
         }
 
-        public override void DeleteCatalogWithId(string id)
+        public override void DeleteProductWithId(string id)
         {
             foreach (var s in dataContext.states)
-                if (s.DrinkId == id)
-                    throw new Exception("Cannot remove object. Is in use by State");
-            dataContext.catalogs.Remove(id);
+                if (s.productId == id)
+                    throw new Exception("Cannot remove object. Current state is used");
+            dataContext.catalog.Remove(id);
         }
 
-        public override void DeleteCatalog(ICatalog c) // If we have a catalog.
+        public override void DeleteProduct(IProduct c) // If we have a catalog.
         {
             foreach (var s in dataContext.states)
-                if (s.DrinkId == c.Id)
-                    throw new Exception("Cannot remove object. Currently in use by State");
+                if (s.productId == c.id)
+                    throw new Exception("Cannot remove object. Current state is used");
 
-            dataContext.catalogs.Remove(c.Id);
+            dataContext.catalog.Remove(c.id);
         }
 
-        public override bool CatalogExists(string id)
+        public override bool ProductExists(string id)
         {
-            return dataContext.catalogs.ContainsKey(id);
+            return dataContext.catalog.ContainsKey(id);
         }
 
         public override void AddEvent(IEvent e)
@@ -138,7 +131,7 @@ namespace DataLayer.Implementation
 
         public override IState GetState(string id)
         {
-            return dataContext.states.Single(s => s.StateId == id);
+            return dataContext.states.Single(s => s.stateId == id);
         }
 
         public override IEnumerable<IState> GetAllStates()
@@ -149,7 +142,7 @@ namespace DataLayer.Implementation
         public override void DeleteState(IState s) // If we have a state
         {
             foreach (var e in dataContext.events)
-                if (e.StateId == s.StateId)
+                if (e.stateId == s.stateId)
                     throw new Exception("State is in use");
             dataContext.states.Remove(s);
         }
@@ -157,16 +150,16 @@ namespace DataLayer.Implementation
         public override void DeleteStateWithId(string id)
         {
             foreach (var e in dataContext.events)
-                if (e.StateId == id)
+                if (e.stateId == id)
                     throw new Exception("State is in use");
-            dataContext.states.Remove(dataContext.states.Single(s => s.StateId == id));
+            dataContext.states.Remove(dataContext.states.Single(s => s.stateId == id));
         }
 
         public override bool StateExists(string id)
         {
             foreach (var state in dataContext.states)
             {
-                if (state.StateId == id) return true;
+                if (state.stateId == id) return true;
             }
             return false;
         }
@@ -175,9 +168,9 @@ namespace DataLayer.Implementation
         {
             foreach (var s in dataContext.states)
             {
-                if (s.StateId == id)
+                if (s.stateId == id)
                 {
-                    if (s.Available) return true;
+                    if (s.available) return true;
                 }
             }
             return false;
@@ -187,14 +180,14 @@ namespace DataLayer.Implementation
         {
             foreach (var s in dataContext.states)
             {
-                if (s.StateId == id)
+                if (s.stateId == id)
                 {
-                    if (s.Available)
+                    if (s.available)
                     {
-                        s.Available = false;
+                        s.available = false;
                         break;
                     }
-                    if (!s.Available) s.Available = true;
+                    if (!s.available) s.available = true;
                     break;
                 }
             }
