@@ -4,9 +4,9 @@ namespace DataLayer.API
 {   //We store all data manipulation methods here for use with Dependency Injection
     public abstract class IDataRepository
     {
-        public static IDataRepository CreateDataRepository(IFill? fill = default)
+        public static IDataRepository CreateDataRepository()
         {
-            return new DataRepository(fill ?? new EmptyFill());
+            return new DataRepository();
         }
 
         //User methods

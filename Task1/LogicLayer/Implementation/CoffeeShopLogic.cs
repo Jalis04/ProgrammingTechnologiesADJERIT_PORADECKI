@@ -4,7 +4,7 @@ using LogicLayer.API;
 
 namespace LogicLayer.Implementation
 {
-    internal class CoffeeShopLogic : ICoffeeShopLogic
+    public class CoffeeShopLogic : ICoffeeShopLogic
     {
         private IDataRepository dataRepository;
 

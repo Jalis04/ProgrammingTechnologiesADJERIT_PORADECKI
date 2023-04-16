@@ -6,10 +6,9 @@ namespace DataLayer.Implementation
     {
         private readonly DataContext dataContext;
 
-        public DataRepository(IFill dataFill)
+        public DataRepository()
         {
             dataContext = new DataContext();
-            dataFill.Fill(this);
         }
 
         public override void AddUser(IUser u)
