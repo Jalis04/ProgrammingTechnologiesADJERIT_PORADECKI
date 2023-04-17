@@ -6,7 +6,7 @@ using LogicLayer.Implementation;
 namespace LogicLayerTests
 {
     [TestClass]
-    public class LogicLayerTests
+    public class LogicLayerStaticTests
     {
         [TestMethod]
         public void TestPlaceOrder()

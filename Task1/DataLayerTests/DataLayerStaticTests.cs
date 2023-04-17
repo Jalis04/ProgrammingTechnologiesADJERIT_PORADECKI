@@ -4,7 +4,7 @@ using DataLayer.Implementation;
 namespace DataLayerTests
 {
     [TestClass]
-    public class DataLayerTests
+    public class DataLayerStaticTests
     {
         [TestMethod]
         public void TestUserGetSet()
