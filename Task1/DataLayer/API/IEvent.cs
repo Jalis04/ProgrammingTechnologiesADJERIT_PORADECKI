@@ -4,5 +4,6 @@
     {
         string stateId { get; }
         string userId { get; }
+        DateTime eventDate { get; }
     }
 }
