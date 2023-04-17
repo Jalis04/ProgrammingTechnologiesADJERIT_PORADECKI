@@ -11,22 +11,22 @@ namespace DataLayer.Implementation
             dataContext = new DataContext();
         }
 
-        public override void AddUser(IUser u)
+        public void AddUser(IUser u)
         {
             dataContext.users.Add(u);
         }
 
-        public override IUser GetUser(string id)
+        public IUser GetUser(string id)
         {
             return dataContext.users.Single(u => u.id == id);
         }
 
-        public override IEnumerable<IUser> GetAllUsers()
+        public IEnumerable<IUser> GetAllUsers()
         {
             return dataContext.users;
         }
 
-        public override void DeleteUser(IUser u) //if we have a user. 
+        public void DeleteUser(IUser u) //if we have a user. 
         {
             int placed = 0;
             int paid = 0;
@@ -41,7 +41,7 @@ namespace DataLayer.Implementation
             dataContext.users.Remove(u);
         }
 
-        public override void DeleteUserWithId(string id)
+        public void DeleteUserWithId(string id)
         {
             int placed = 0;
             int paid = 0;
@@ -56,7 +56,7 @@ namespace DataLayer.Implementation
             dataContext.users.Remove(dataContext.users.Single(u => u.id == id));
         }
 
-        public override bool UserExists(string id)
+        public bool UserExists(string id)
         {
             foreach (var user in dataContext.users)
             {
@@ -65,22 +65,22 @@ namespace DataLayer.Implementation
             return false;
         }
 
-        public override void AddProduct(IProduct c)
+        public void AddProduct(IProduct c)
         {
             dataContext.catalog.Add(c.id, c);
         }
 
-        public override IProduct GetProduct(string id)
+        public IProduct GetProduct(string id)
         {
             return dataContext.catalog[id];
         }
 
-        public override IEnumerable<IProduct> GetAllProducts()
+        public IEnumerable<IProduct> GetAllProducts()
         {
             return dataContext.catalog.Values;
         }
 
-        public override void DeleteProductWithId(string id)
+        public void DeleteProductWithId(string id)
         {
             foreach (var s in dataContext.states)
                 if (s.productId == id)
@@ -88,7 +88,7 @@ namespace DataLayer.Implementation
             dataContext.catalog.Remove(id);
         }
 
-        public override void DeleteProduct(IProduct c) // If we have a catalog.
+        public void DeleteProduct(IProduct c) // If we have a catalog.
         {
             foreach (var s in dataContext.states)
                 if (s.productId == c.id)
@@ -97,22 +97,22 @@ namespace DataLayer.Implementation
             dataContext.catalog.Remove(c.id);
         }
 
-        public override bool ProductExists(string id)
+        public bool ProductExists(string id)
         {
             return dataContext.catalog.ContainsKey(id);
         }
 
-        public override void AddEvent(IEvent e)
+        public void AddEvent(IEvent e)
         {
             dataContext.events.Add(e);
         }
 
-        public override IEnumerable<IEvent> GetAllEvents()
+        public IEnumerable<IEvent> GetAllEvents()
         {
             return dataContext.events;
         }
 
-        public override void DeleteEvent(IEvent e)
+        public void DeleteEvent(IEvent e)
         {
             foreach (var ee in dataContext.events)
                 if (e.Equals(ee))
@@ -123,22 +123,22 @@ namespace DataLayer.Implementation
 
             throw new Exception("There is no such event");
         }
-        public override void AddState(IState s)
+        public void AddState(IState s)
         {
             dataContext.states.Add(s);
         }
 
-        public override IState GetState(string id)
+        public IState GetState(string id)
         {
             return dataContext.states.Single(s => s.stateId == id);
         }
 
-        public override IEnumerable<IState> GetAllStates()
+        public IEnumerable<IState> GetAllStates()
         {
             return dataContext.states;
         }
 
-        public override void DeleteState(IState s) // If we have a state
+        public void DeleteState(IState s) // If we have a state
         {
             foreach (var e in dataContext.events)
                 if (e.stateId == s.stateId)
@@ -146,7 +146,7 @@ namespace DataLayer.Implementation
             dataContext.states.Remove(s);
         }
 
-        public override void DeleteStateWithId(string id)
+        public void DeleteStateWithId(string id)
         {
             foreach (var e in dataContext.events)
                 if (e.stateId == id)
@@ -154,7 +154,7 @@ namespace DataLayer.Implementation
             dataContext.states.Remove(dataContext.states.Single(s => s.stateId == id));
         }
 
-        public override bool StateExists(string id)
+        public bool StateExists(string id)
         {
             foreach (var state in dataContext.states)
             {
@@ -163,7 +163,7 @@ namespace DataLayer.Implementation
             return false;
         }
 
-        public override bool IsAvailable(string id)
+        public bool IsAvailable(string id)
         {
             foreach (var s in dataContext.states)
             {
@@ -175,7 +175,7 @@ namespace DataLayer.Implementation
             return false;
         }
 
-        public override void ChangeAvailability(string id)
+        public void ChangeAvailability(string id)
         {
             foreach (var s in dataContext.states)
             {

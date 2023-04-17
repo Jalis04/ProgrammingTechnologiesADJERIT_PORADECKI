@@ -2,7 +2,7 @@
 
 namespace DataLayer.API
 {   //We store all data manipulation methods here for use with Dependency Injection
-    public abstract class IDataRepository
+    public interface IDataRepository
     {
         public static IDataRepository CreateDataRepository()
         {
@@ -10,37 +10,37 @@ namespace DataLayer.API
         }
 
         //User methods
-        public abstract void AddUser(IUser u);
-        public abstract IUser GetUser(string id);
-        public abstract IEnumerable<IUser> GetAllUsers();
+        public void AddUser(IUser u);
+        public IUser GetUser(string id);
+        public IEnumerable<IUser> GetAllUsers();
 
-        public abstract void DeleteUser(IUser u);   
-        public abstract void DeleteUserWithId(string id);
-        public abstract bool UserExists(string id);
+        public void DeleteUser(IUser u);   
+        public void DeleteUserWithId(string id);
+        public bool UserExists(string id);
 
         //Product methods
-        public abstract void AddProduct(IProduct c);
-        public abstract IProduct GetProduct(string id);
-        public abstract IEnumerable<IProduct> GetAllProducts();
-        public abstract void DeleteProductWithId(string id);
-        public abstract void DeleteProduct(IProduct c); // If we have a catalog.
-        public abstract bool ProductExists(string id);
+        public void AddProduct(IProduct c);
+        public IProduct GetProduct(string id);
+        public IEnumerable<IProduct> GetAllProducts();
+        public void DeleteProductWithId(string id);
+        public void DeleteProduct(IProduct c); // If we have a catalog.
+        public bool ProductExists(string id);
 
         //State methods
-        public abstract void AddState(IState s);
-        public abstract IState GetState(string id);
-        public abstract IEnumerable<IState> GetAllStates();
-        public abstract void DeleteState(IState s); // If we have a state
-        public abstract void DeleteStateWithId(string id);
-        public abstract bool StateExists(string id);
-        public abstract bool IsAvailable(string id);
-        public abstract void ChangeAvailability(string id);
+        public void AddState(IState s);
+        public IState GetState(string id);
+        public IEnumerable<IState> GetAllStates();
+        public void DeleteState(IState s); // If we have a state
+        public void DeleteStateWithId(string id);
+        public bool StateExists(string id);
+        public bool IsAvailable(string id);
+        public void ChangeAvailability(string id);
 
         //Event methods
 
-        public abstract void AddEvent(IEvent e);
-        public abstract IEnumerable<IEvent> GetAllEvents();
-        public abstract void DeleteEvent(IEvent e);
+        public void AddEvent(IEvent e);
+        public IEnumerable<IEvent> GetAllEvents();
+        public void DeleteEvent(IEvent e);
 
 
     }
