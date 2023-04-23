@@ -2,8 +2,9 @@
 {
     public interface IEvent
     {
-        string stateId { get; }
-        string userId { get; }
+        string eventId { get; set; }
+        string stateId { get; set; }
+        string userId { get; set; }
         DateTime eventDate { get; }
     }
 }

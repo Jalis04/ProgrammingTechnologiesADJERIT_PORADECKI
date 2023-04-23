@@ -2,7 +2,7 @@
 
 namespace   DataLayer.Implementation
 {
-    public class Product : IProduct
+    internal class Product : IProduct
     {
         public string id { get; set; }
         public string productName { get; set; }

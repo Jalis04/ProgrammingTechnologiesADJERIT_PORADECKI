@@ -2,18 +2,17 @@
 
 namespace DataLayer.Implementation
 {
-    public class State : IState
+    internal class State : IState
     {
-        private readonly IProduct product;
 
-        public State(string stateId, IProduct product)
+        public State(string stateId, string productId)
         {
             this.stateId = stateId;
-            this.product = product;
+            this.productId = productId;
             available = true;
         }
 
-        public string productId => product.id;
+        public string productId { get; }
         public string stateId { get; set; }
 
         public bool available { get; set; }

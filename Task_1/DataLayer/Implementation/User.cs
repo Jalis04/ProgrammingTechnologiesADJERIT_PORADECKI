@@ -2,7 +2,7 @@
 
 namespace DataLayer.Implementation
 {
-    public class User : IUser
+    internal class User : IUser
     {
         public User(string id, string firstName, string lastName)
         {
