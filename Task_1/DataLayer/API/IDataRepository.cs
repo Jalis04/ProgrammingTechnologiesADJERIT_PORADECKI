@@ -10,37 +10,34 @@ namespace DataLayer.API
         }
 
         //User methods
-        public void AddUser(IUser u);
+        public void AddUser(string id, string firstName, string lastName);
         public IUser GetUser(string id);
         public IEnumerable<IUser> GetAllUsers();
 
-        public void DeleteUser(IUser u);   
-        public void DeleteUserWithId(string id);
+        public void DeleteUser(string id);   
         public bool UserExists(string id);
 
         //Product methods
-        public void AddProduct(IProduct c);
+        public void AddProduct(string id, string productName, string productDescription, float price);
         public IProduct GetProduct(string id);
         public IEnumerable<IProduct> GetAllProducts();
-        public void DeleteProductWithId(string id);
-        public void DeleteProduct(IProduct c); // If we have a catalog.
+        public void DeleteProduct(string id); // If we have a catalog.
         public bool ProductExists(string id);
 
         //State methods
-        public void AddState(IState s);
+        public void AddState(string stateId, string productId);
         public IState GetState(string id);
         public IEnumerable<IState> GetAllStates();
-        public void DeleteState(IState s); // If we have a state
-        public void DeleteStateWithId(string id);
+        public void DeleteState(string id); // If we have a state
         public bool StateExists(string id);
         public bool IsAvailable(string id);
         public void ChangeAvailability(string id);
 
         //Event methods
 
-        public void AddEvent(IEvent e);
+        public void AddEvent(string event_type, string eventId, string stateId, string userId);
         public IEnumerable<IEvent> GetAllEvents();
-        public void DeleteEvent(IEvent e);
+        public void DeleteEvent(string id);
 
 
     }

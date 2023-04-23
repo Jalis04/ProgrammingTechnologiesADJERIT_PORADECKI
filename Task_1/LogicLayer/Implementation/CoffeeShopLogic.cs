@@ -17,15 +17,14 @@ namespace LogicLayer.Implementation
         public override void PlaceOrder(string userId, string stateId)
         {
             if (!dataRepository.IsAvailable(stateId)) throw new InvalidOperationException("Cannot order nothing");
-            IEvent rent = new PlaceOrderEvent(stateId, userId);
-            dataRepository.AddEvent(rent);
+            dataRepository.AddEvent("Place", "01",  stateId, userId);
             dataRepository.ChangeAvailability(stateId);
         }
 
         public override void PayOrder(string userId, string stateId)
         {
             if (dataRepository.IsAvailable(stateId)) throw new InvalidOperationException("Cannot pay if there are no orders");
-            dataRepository.AddEvent(new PayOrderEvent(stateId, userId));
+            dataRepository.AddEvent("Pay", "01", stateId, userId);
             dataRepository.ChangeAvailability(stateId);
         }
     }

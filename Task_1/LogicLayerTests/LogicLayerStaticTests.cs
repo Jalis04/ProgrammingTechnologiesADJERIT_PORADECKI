@@ -12,12 +12,9 @@ namespace LogicLayerTests
         public void TestPlaceOrder()
         {
             IDataRepository dataRepository = IDataRepository.CreateDataRepository();
-            IUser user = new User("01", "John", "Doe");
-            IProduct product = new Product("01", "Black coffee", "Description", 3.99f);
-            IState state = new State("01", product);
-            dataRepository.AddUser(user);
-            dataRepository.AddProduct(product);
-            dataRepository.AddState(state);
+            dataRepository.AddUser("01", "John", "Doe");
+            dataRepository.AddProduct("02", "Black coffee", "Description", 3.99f);
+            dataRepository.AddState("01", "02");
             
             ICoffeeShopLogic coffeeShopLogic = new CoffeeShopLogic(dataRepository);
 
@@ -29,12 +26,9 @@ namespace LogicLayerTests
         public void TestPayOrder()
         {
             IDataRepository dataRepository = IDataRepository.CreateDataRepository();
-            IUser user = new User("01", "John", "Doe");
-            IProduct product = new Product("01", "Black coffee", "Description", 3.99f);
-            IState state = new State("01", product);
-            dataRepository.AddUser(user);
-            dataRepository.AddProduct(product);
-            dataRepository.AddState(state);
+            dataRepository.AddUser("01", "John", "Doe");
+            dataRepository.AddProduct("02", "Black coffee", "Description", 3.99f);
+            dataRepository.AddState("01", "02");
 
             ICoffeeShopLogic coffeeShopLogic = new CoffeeShopLogic(dataRepository);
 

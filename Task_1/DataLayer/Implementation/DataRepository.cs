@@ -11,9 +11,9 @@ namespace DataLayer.Implementation
             dataContext = new DataContext();
         }
 
-        public void AddUser(IUser u)
+        public void AddUser(string id, string firstName, string lastName)
         {
-            dataContext.users.Add(u);
+            dataContext.users.Add(new User(id, firstName, lastName));
         }
 
         public IUser GetUser(string id)
@@ -26,19 +26,19 @@ namespace DataLayer.Implementation
             return dataContext.users;
         }
 
-        public void DeleteUser(IUser u) //if we have a user. 
+        public void DeleteUser(string id) //if we have a user. 
         {
             int placed = 0;
             int paid = 0;
             foreach (var e in dataContext.events.OfType<PlaceOrderEvent>())
-                if (e.userId == u.id)
+                if (e.userId == id)
                     placed++;
             foreach (var e in dataContext.events.OfType<PayOrderEvent>())
-                if (e.userId == u.id)
+                if (e.userId == id)
                     paid++;
             if (placed != paid)
                 throw new Exception("User has an unpaid order, cannot be deleted.");
-            dataContext.users.Remove(u);
+            dataContext.users.Remove(dataContext.users.Single(u => u.id == id));
         }
 
         public void DeleteUserWithId(string id)
@@ -65,9 +65,9 @@ namespace DataLayer.Implementation
             return false;
         }
 
-        public void AddProduct(IProduct c)
+        public void AddProduct(string id, string productName, string productDescription, float price)
         {
-            dataContext.catalog.Add(c.id, c);
+            dataContext.catalog.Add(id, new Product(id, productName, productDescription, price));
         }
 
         public IProduct GetProduct(string id)
@@ -80,21 +80,11 @@ namespace DataLayer.Implementation
             return dataContext.catalog.Values;
         }
 
-        public void DeleteProductWithId(string id)
+        public void DeleteProduct(string id)
         {
-            foreach (var s in dataContext.states)
-                if (s.productId == id)
-                    throw new Exception("Cannot remove object. Current state is used");
-            dataContext.catalog.Remove(id);
-        }
-
-        public void DeleteProduct(IProduct c) // If we have a catalog.
-        {
-            foreach (var s in dataContext.states)
-                if (s.productId == c.id)
-                    throw new Exception("Cannot remove object. Current state is used");
-
-            dataContext.catalog.Remove(c.id);
+            foreach (var s in dataContext.catalog)
+                if (s.Key == id)
+                dataContext.catalog.Remove(id);
         }
 
         public bool ProductExists(string id)
@@ -102,9 +92,17 @@ namespace DataLayer.Implementation
             return dataContext.catalog.ContainsKey(id);
         }
 
-        public void AddEvent(IEvent e)
+        public void AddEvent(string event_type, string eventId, string stateId, string userId)
         {
-            dataContext.events.Add(e);
+            if (event_type == "Pay")
+            {
+                dataContext.events.Add(new PayOrderEvent(eventId, stateId, userId));
+            }
+            else if (event_type == "Place")
+            {
+                dataContext.events.Add(new PlaceOrderEvent(eventId, stateId, userId));
+            }
+
         }
 
         public IEnumerable<IEvent> GetAllEvents()
@@ -112,20 +110,20 @@ namespace DataLayer.Implementation
             return dataContext.events;
         }
 
-        public void DeleteEvent(IEvent e)
+        public void DeleteEvent(string id)
         {
             foreach (var ee in dataContext.events)
-                if (e.Equals(ee))
+                if (id == ee.eventId)
                 {
-                    dataContext.events.Remove(e);
+                    dataContext.events.Remove(ee);
                     return;
                 }
 
             throw new Exception("There is no such event");
         }
-        public void AddState(IState s)
+        public void AddState(string stateId, string productId)
         {
-            dataContext.states.Add(s);
+             dataContext.states.Add(new State(stateId, productId));
         }
 
         public IState GetState(string id)
@@ -138,20 +136,16 @@ namespace DataLayer.Implementation
             return dataContext.states;
         }
 
-        public void DeleteState(IState s) // If we have a state
+        public void DeleteState(string id) // If we have a state
         {
-            foreach (var e in dataContext.events)
-                if (e.stateId == s.stateId)
-                    throw new Exception("State is in use");
-            dataContext.states.Remove(s);
-        }
+            foreach (var s in dataContext.states)
+            {
+                if (s.stateId == id)
+                {
+                    dataContext.states.Remove(s);
 
-        public void DeleteStateWithId(string id)
-        {
-            foreach (var e in dataContext.events)
-                if (e.stateId == id)
-                    throw new Exception("State is in use");
-            dataContext.states.Remove(dataContext.states.Single(s => s.stateId == id));
+                }
+            }
         }
 
         public bool StateExists(string id)
