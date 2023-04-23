@@ -21,8 +21,7 @@ namespace DataLayerTests
             {
                 int randomId = rnd.Next();
                 string strRandomId = randomId.ToString();
-                IUser user = new User(strRandomId, "User" + strRandomId.ToString(), "Surname" + strRandomId.ToString());
-                dataRepository.AddUser(user);
+                dataRepository.AddUser(strRandomId, "User" + strRandomId.ToString(), "Surname" + strRandomId.ToString());
             }
 
             Assert.AreEqual(dataRepository.GetAllUsers().Count(), size);
@@ -36,8 +35,7 @@ namespace DataLayerTests
             Random rnd = new Random();
             int size = rnd.Next();
 
-            IProduct product = new Product(size.ToString(), "White coffee", "Description", 3.99f);
-            dataRepository.AddProduct(product);
+            dataRepository.AddProduct(size.ToString(), "White coffee", "Description", 3.99f);
 
             Assert.IsTrue(dataRepository.ProductExists(size.ToString()));
         }

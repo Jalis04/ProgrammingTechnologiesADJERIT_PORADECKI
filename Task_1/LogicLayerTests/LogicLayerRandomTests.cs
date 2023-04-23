@@ -22,12 +22,9 @@ namespace LogicLayerTests
             string productId = rnd.Next().ToString();
             string stateId = rnd.Next().ToString();
 
-            IUser user = new User(userId, "John", "Doe");
-            IProduct product = new Product(productId, "Black coffee", "Description", 3.99f);
-            IState state = new State(stateId, product);
-            dataRepository.AddUser(user);
-            dataRepository.AddProduct(product);
-            dataRepository.AddState(state);
+            dataRepository.AddUser(userId, "John", "Doe");
+            dataRepository.AddProduct(productId, "Black coffee", "Description", 3.99f);
+            dataRepository.AddState(stateId, productId);
 
             ICoffeeShopLogic coffeeShopLogic = new CoffeeShopLogic(dataRepository);
 
@@ -44,12 +41,9 @@ namespace LogicLayerTests
             string productId = rnd.Next().ToString();
             string stateId = rnd.Next().ToString();
 
-            IUser user = new User(userId, "John", "Doe");
-            IProduct product = new Product(productId, "Black coffee", "Description", 3.99f);
-            IState state = new State(stateId, product);
-            dataRepository.AddUser(user);
-            dataRepository.AddProduct(product);
-            dataRepository.AddState(state);
+            dataRepository.AddUser(userId, "John", "Doe");
+            dataRepository.AddProduct(productId, "Black coffee", "Description", 3.99f);
+            dataRepository.AddState(stateId, productId);
 
             ICoffeeShopLogic coffeeShopLogic = new CoffeeShopLogic(dataRepository);
 
