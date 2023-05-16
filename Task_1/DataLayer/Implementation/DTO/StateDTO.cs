@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Implementation
 {
-    internal class StateDTO
+    internal class StateDTO : IState
     {
-        string productId { get; init; }
-        string stateId { get; set; }
-        bool available { get; set; }
+        public string productId { get; init; }
+        public string stateId { get; set; }
+        public bool available { get; set; }
     }
 }
