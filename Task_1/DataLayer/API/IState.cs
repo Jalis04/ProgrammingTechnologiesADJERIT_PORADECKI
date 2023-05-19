@@ -2,8 +2,8 @@
 {
     public interface IState
     {
-        string productId { get; }
-        string stateId { get; set; }
+        int productId { get; }
+        int stateId { get; set; }
 
         bool available { get; set; }
     }

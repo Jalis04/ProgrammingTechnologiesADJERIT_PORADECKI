@@ -4,7 +4,7 @@ namespace DataLayer.Implementation
 {
     internal class PayOrderEvent : IEvent
     {
-        public PayOrderEvent(string eventId, string stateId, string userId)
+        public PayOrderEvent(int eventId, int stateId, int userId)
         {
             this.eventId = eventId;
             this.stateId = stateId;
@@ -12,9 +12,9 @@ namespace DataLayer.Implementation
             this.eventDate = DateTime.Now;
         }
 
-        public string eventId { get; set; }
-        public string stateId { get; set; }
-        public string userId { get; set; }
+        public int eventId { get; set; }
+        public int stateId { get; set; }
+        public int userId { get; set; }
         public DateTime eventDate { get; }
     }
 }
