@@ -12,7 +12,7 @@ namespace DataLayer.Implementation
         }
 
         private readonly string ConnectionString =
-            "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=E:\\c#\\ProgrammingTechnologiesADJERIT_PORADECKI\\Task_1\\DataLayerTests\\Instrumentation\\CoffeeShopDB.mdf;Integrated Security=True";
+            "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=E:\\c#\\ProgrammingTechnologiesADJERIT_PORADECKI\\Task_1\\DataLayer\\Instrumentation\\CoffeeShopDB.mdf;Integrated Security=True";
 
         #region User CRUD
 
@@ -274,41 +274,41 @@ namespace DataLayer.Implementation
 
         #region Event CRUD
 
-        public async Task AddEventAsync(IEvent e, string type)
+        public async Task AddEventAsync(IEvent e)
         {
             using (CoffeeShopDataContext context = new CoffeeShopDataContext(this.ConnectionString))
             {
-                Instrumentation.PayedOrder entity = new Instrumentation.PayedOrder()
+                Instrumentation.Event entity = new Instrumentation.Event()
                 {
-                    EventId = e.eventId,
+                    Id = e.eventId,
                     StateId = e.stateId,
                     UserId = e.userId,
                     EventDate = e.eventDate,
+                    Type = e.type
+
                 };
 
-                context.PayedOrders.InsertOnSubmit(entity);
+                context.Events.InsertOnSubmit(entity);
 
                 await Task.Run(() => context.SubmitChanges());
             }
         }
 
-        public async Task<IEvent?> GetEventAsync(int id, string type)
+        public async Task<IEvent?> GetEventAsync(int id)
         {
             using (CoffeeShopDataContext context = new CoffeeShopDataContext(this.ConnectionString))
             {
-                Instrumentation.PayedOrder? e = await Task.Run(() =>
+                Instrumentation.Event? even = await Task.Run(() =>
                 {
-                    IQueryable<Instrumentation.PayedOrder> query =
-                        from e in context.PayedOrders
-                        where e.EventId == id
+                    IQueryable<Instrumentation.Event> query =
+                        from e in context.Events
+                        where e.Id == id
                         select e;
 
                     return query.FirstOrDefault();
                 });
 
-
-                PayedOrder payedOrder = new PayedOrder();
-                return (IEvent?)payedOrder;
+                return even is not null ? new Event(even.Id, even.StateId, even.UserId, even.Type) : null;
             }
 
         }
@@ -317,11 +317,12 @@ namespace DataLayer.Implementation
         {
             using (CoffeeShopDataContext context = new CoffeeShopDataContext(this.ConnectionString))
             {
-                Instrumentation.PayedOrder toUpdate = (from e in context.PayedOrders where e.id == even.Id select e).FirstOrDefault()!;
+                Instrumentation.Event toUpdate = (from e in context.Events where e.Id == even.eventId select e).FirstOrDefault()!;
 
                 toUpdate.StateId = even.stateId;
                 toUpdate.UserId = even.userId;
-                toUpdate.EventId = even.eventId;
+                toUpdate.Id = even.eventId;
+                toUpdate.Type = even.type;
 
                 await Task.Run(() => context.SubmitChanges());
             }
@@ -331,9 +332,9 @@ namespace DataLayer.Implementation
         {
             using (CoffeeShopDataContext context = new CoffeeShopDataContext(this.ConnectionString))
             {
-                Instrumentation.PayedOrder toDelete = (from e in context.PayedOrders where e.id == id select e).FirstOrDefault()!;
+                Instrumentation.Event toDelete = (from e in context.Events where e.Id == id select e).FirstOrDefault()!;
 
-                context.PayedOrders.DeleteOnSubmit(toDelete);
+                context.Events.DeleteOnSubmit(toDelete);
 
                 await Task.Run(() => context.SubmitChanges());
             }
@@ -343,9 +344,9 @@ namespace DataLayer.Implementation
         {
             using (CoffeeShopDataContext context = new CoffeeShopDataContext(this.ConnectionString))
             {
-                IQueryable<IEvent> eventQuery = from e in context.PayedOrders
+                IQueryable<IEvent> eventQuery = from e in context.Events
                                                 select
-                                                    new PayedOrder() as IEvent;
+                                                    new Event(e.Id, e.StateId, e.UserId, e.Type) as IEvent;
 
                 return await Task.Run(() => eventQuery.ToDictionary(k => k.eventId));
             }
@@ -355,7 +356,7 @@ namespace DataLayer.Implementation
         {
             using (CoffeeShopDataContext context = new CoffeeShopDataContext(this.ConnectionString))
             {
-                return await Task.Run(() => context.PayedOrders.Count());
+                return await Task.Run(() => context.Events.Count());
             }
         }
 
@@ -379,9 +380,9 @@ namespace DataLayer.Implementation
             return (await this.GetStateAsync(id)) != null;
         }
 
-        public async Task<bool> CheckIfEventExists(int id, string type)
+        public async Task<bool> CheckIfEventExists(int id)
         {
-            return (await this.GetEventAsync(id, type)) != null;
+            return (await this.GetEventAsync(id)) != null;
         }
 
         #endregion

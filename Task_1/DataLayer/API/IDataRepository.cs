@@ -40,7 +40,7 @@ namespace DataLayer.API
         #region Event CRUD
         Task AddEventAsync(int id, int stateId, int userId, string type, int quantity = 0);
         Task<IEvent> GetEventAsync(int id, string type);
-        Task UpdateEventAsync(int id, int stateId, int userId, string type, int? quantity);
+        Task UpdateEventAsync(int id, int stateId, int userId, string type);
         Task DeleteEventAsync(int id);
         Task<Dictionary<int, IEvent>> GetAllEventsAsync();
         Task<int> GetEventsCountAsync();

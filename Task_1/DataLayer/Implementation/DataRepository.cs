@@ -179,75 +179,34 @@ namespace DataLayer.Implementation
 
             switch (type)
             {
-                case "PurchaseEvent":
-                    newEvent = new PurchaseEvent(id, stateId, userId, DateTime.Now);
+                case "PlacedOrder":
+                    newEvent = new Event(id, stateId, userId, type);
 
-                    if (DateTime.Now.Year - user.DateOfBirth.Year < product.Pegi)
-                        throw new Exception("You are not old enough to purchase this game!");
-
-                    if (state.productQuantity == 0)
+                    if (state.available == false)
                         throw new Exception("Product unavailable, please check later!");
 
-                    if (user.Balance < product.Price)
-                        throw new Exception("Not enough money to purchase this product!");
-
-                    await this.UpdateStateAsync(stateId, product.Id, state.productQuantity - 1);
-                    await this.UpdateUserAsync(userId, user.Nickname, user.Email, user.Balance - product.Price, user.DateOfBirth);
+                    await this.UpdateStateAsync(stateId, product.id);
+                    await this.UpdateUserAsync(userId, user.firstName, user.lastName);
 
                     break;
 
-                case "ReturnEvent":
-                    newEvent = new ReturnEvent(id, stateId, userId, DateTime.Now);
+                case "PayedOrder":
+                    newEvent = new Event(id, stateId, userId, type);
 
                     Dictionary<int, IEvent> events = await this.GetAllEventsAsync();
                     Dictionary<int, IState> states = await this.GetAllStatesAsync();
 
                     int copiesBought = 0;
 
-                    foreach
-                    (
-                        IEvent even in
-                        from even in events.Values
-                        from stat in states.Values
-                        where even.userId == user.Id &&
-                              even.stateId == stat.Id &&
-                              stat.productId == product.Id
-                        select even
-                    )
-                        if (even is PurchaseEvent)
-                            copiesBought++;
-                        else if (even is ReturnEvent)
-                            copiesBought--;
-
-                    copiesBought--;
-
-                    if (copiesBought < 0)
-                        throw new Exception("You do not own this product!");
-
-                    await this.UpdateStateAsync(stateId, product.Id, state.productQuantity + 1);
-                    await this.UpdateUserAsync(userId, user.Nickname, user.Email, user.Balance + product.Price, user.DateOfBirth);
-
                     break;
-                case "SupplyEvent":
-                    newEvent = new SupplyEvent(id, stateId, userId, DateTime.Now, quantity);
-
-                    if (quantity <= 0)
-                        throw new Exception("Can not supply with this amount!");
-
-                    await this.UpdateStateAsync(stateId, product.Id, state.productQuantity + quantity);
-
-                    break;
-
-                default:
-                    throw new Exception("This event type does not exist!");
             }
 
-            await this._context.AddEventAsync(newEvent, type);
+            //await this._context.AddEventAsync(newEvent, type);
         }
 
         public async Task<IEvent> GetEventAsync(int id, string type)
         {
-            IEvent? even = await this._context.GetEventAsync(id, type);
+            IEvent? even = await this._context.GetEventAsync(id);
 
             if (even is null)
                 throw new Exception("This event does not exist!");
@@ -255,23 +214,11 @@ namespace DataLayer.Implementation
             return even;
         }
 
-        public async Task UpdateEventAsync(int id, int stateId, int userId, string type, int? quantity)
+        public async Task UpdateEventAsync(int id, int stateId, int userId, string type)
         {
-            IEvent newEvent;
+            IEvent newEvent = new Event(id, stateId, userId, type);
 
-            switch (type)
-            {
-                case "PurchaseEvent":
-                    newEvent = new PurchaseEvent(id, stateId, userId, DateTime.Now); break;
-                case "ReturnEvent":
-                    newEvent = new ReturnEvent(id, stateId, userId, DateTime.Now); break;
-                case "SupplyEvent":
-                    newEvent = new SupplyEvent(id, stateId, userId, DateTime.Now, (int)quantity!); break;
-                default:
-                    throw new Exception("This event type does not exist!");
-            }
-
-            if (!await this.CheckIfEventExists(newEvent.Id, type))
+            if (!await this.CheckIfEventExists(newEvent.eventId, type))
                 throw new Exception("This event does not exist");
 
             await this._context.UpdateEventAsync(newEvent);
@@ -279,7 +226,7 @@ namespace DataLayer.Implementation
 
         public async Task DeleteEventAsync(int id)
         {
-            if (!await this.CheckIfEventExists(id, "PurchaseEvent"))
+            if (!await this.CheckIfEventExists(id, "PayedEvent"))
                 throw new Exception("This event does not exist");
 
             await this._context.DeleteEventAsync(id);
@@ -317,17 +264,8 @@ namespace DataLayer.Implementation
 
         public async Task<bool> CheckIfEventExists(int id, string type)
         {
-            return await this._context.CheckIfEventExists(id, type);
+            return await this._context.CheckIfEventExists(id);
         }
-
-        //public async Task<IEvent> GetLastProductEvent(int productId)
-        //}
-        //public async Task<Dictionary<int, IEvent>> GetProductEventHistory(int productId)
-        //{
-        //}
-        //public async Task<IState> GetProductState(int productId)
-        //{
-        //}
         #endregion
     }
 }

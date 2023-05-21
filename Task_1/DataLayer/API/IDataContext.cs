@@ -33,8 +33,8 @@ namespace DataLayer.API
         #endregion
 
         #region Event CRUD
-        Task AddEventAsync(IEvent even, string type);
-        Task<IEvent?> GetEventAsync(int id, string type);
+        Task AddEventAsync(IEvent even);
+        Task<IEvent?> GetEventAsync(int id);
         Task UpdateEventAsync(IEvent even);
         Task DeleteEventAsync(int id);
         Task<Dictionary<int, IEvent>> GetAllEventsAsync();
@@ -45,7 +45,7 @@ namespace DataLayer.API
         Task<bool> CheckIfUserExists(int id);
         Task<bool> CheckIfProductExists(int id);
         Task<bool> CheckIfStateExists(int id);
-        Task<bool> CheckIfEventExists(int id, string type);
+        Task<bool> CheckIfEventExists(int id);
         #endregion
     }
 }
