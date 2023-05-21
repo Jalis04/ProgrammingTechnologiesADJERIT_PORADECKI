@@ -5,7 +5,7 @@ using System.Data.Common;
 namespace DataLayerTests
 {
     [TestClass]
-    public class DataLayerStaticTests
+    public class DataLayerTests
     {
         private readonly IDataRepository _dataRepository = IDataRepository.CreateDatabase();
 
