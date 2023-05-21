@@ -1,24 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="CoffeeShopDB" Class="CoffeeShopDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Table Name="dbo.PayedOrders" Member="PayedOrders">
-    <Type Name="PayedOrder">
-      <Column Name="EventId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="StateId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="EventDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Association Name="State_PayedOrder" Member="State" ThisKey="StateId" OtherKey="StateId" Type="State" IsForeignKey="true" />
-      <Association Name="User_PayedOrder" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.PlacedOrders" Member="PlacedOrders">
-    <Type Name="PlacedOrder">
-      <Column Name="EventId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="StateId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="EventDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Association Name="State_PlacedOrder" Member="State" ThisKey="StateId" OtherKey="StateId" Type="State" IsForeignKey="true" />
-      <Association Name="User_PlacedOrder" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Products" Member="Products">
     <Type Name="Product">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -33,8 +13,7 @@
       <Column Name="StateId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="ProductId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Availavle" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="State_PayedOrder" Member="PayedOrders" ThisKey="StateId" OtherKey="StateId" Type="PayedOrder" />
-      <Association Name="State_PlacedOrder" Member="PlacedOrders" ThisKey="StateId" OtherKey="StateId" Type="PlacedOrder" />
+      <Association Name="State_Event" Member="Events" ThisKey="StateId" OtherKey="StateId" Type="Event" />
       <Association Name="Product_State" Member="Product" ThisKey="ProductId" OtherKey="Id" Type="Product" IsForeignKey="true" />
     </Type>
   </Table>
@@ -43,8 +22,18 @@
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="FirstName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="LastName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Association Name="User_PayedOrder" Member="PayedOrders" ThisKey="Id" OtherKey="UserId" Type="PayedOrder" />
-      <Association Name="User_PlacedOrder" Member="PlacedOrders" ThisKey="Id" OtherKey="UserId" Type="PlacedOrder" />
+      <Association Name="User_Event" Member="Events" ThisKey="Id" OtherKey="UserId" Type="Event" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Events" Member="Events">
+    <Type Name="Event">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="StateId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EventDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="State_Event" Member="State" ThisKey="StateId" OtherKey="StateId" Type="State" IsForeignKey="true" />
+      <Association Name="User_Event" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
