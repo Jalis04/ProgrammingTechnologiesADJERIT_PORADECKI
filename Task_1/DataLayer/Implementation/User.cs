@@ -4,7 +4,7 @@ namespace DataLayer.Implementation
 {
     internal class User : IUser
     {
-        public User(string id, string firstName, string lastName)
+        public User(int id, string firstName, string lastName)
         {
             this.id = id;
             this.firstName = firstName;
@@ -15,6 +15,6 @@ namespace DataLayer.Implementation
 
         public string lastName { get; set; }
 
-        public string id { get; set; }
+        public int id { get; set; }
     }
 }

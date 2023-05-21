@@ -4,6 +4,6 @@
     {
         string firstName { get; set; }
         string lastName { get; set; }
-        string id { get; set; }
+        int id { get; set; }
     }
 }

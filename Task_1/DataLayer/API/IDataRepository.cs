@@ -1,44 +1,49 @@
 ﻿using DataLayer.Implementation;
+using System.Collections.Generic;
 
 namespace DataLayer.API
 {   //We store all data manipulation methods here for use with Dependency Injection
     public interface IDataRepository
     {
-        public static IDataRepository CreateDataRepository()
+        static IDataRepository CreateDatabase(IDataContext? dataContext = null)
         {
-            return new DataRepository();
+            return new DataRepository(dataContext ?? new DataContext());
         }
 
-        //User methods
-        public void AddUser(string id, string firstName, string lastName);
-        public IUser GetUser(string id);
-        public IEnumerable<IUser> GetAllUsers();
+        #region User CRUD
+        Task AddUserAsync(int id, string firstName, string lastName);
+        Task<IUser> GetUserAsync(int id);
+        Task UpdateUserAsync(int id, string firstName, string lastName);
+        Task DeleteUserAsync(int id);
+        Task<Dictionary<int, IUser>> GetAllUsersAsync();
+        Task<int> GetUsersCountAsync();
+        #endregion User CRUD
 
-        public void DeleteUser(string id);   
-        public bool UserExists(string id);
+        #region Product CRUD
+        Task AddProductAsync(int id, string name, string description, float price);
+        Task<IProduct> GetProductAsync(int id);
+        Task UpdateProductAsync(int id, string name, string description, float price);
+        Task DeleteProductAsync(int id);
+        Task<Dictionary<int, IProduct>> GetAllProductsAsync();
+        Task<int> GetProductsCountAsync();
+        #endregion
 
-        //Product methods
-        public void AddProduct(string id, string productName, string productDescription, float price);
-        public IProduct GetProduct(string id);
-        public IEnumerable<IProduct> GetAllProducts();
-        public void DeleteProduct(string id); // If we have a catalog.
-        public bool ProductExists(string id);
+        #region State CRUD
+        Task AddStateAsync(int id, int productId);
+        Task<IState> GetStateAsync(int id);
+        Task UpdateStateAsync(int id, int productId);
+        Task DeleteStateAsync(int id);
+        Task<Dictionary<int, IState>> GetAllStatesAsync();
+        Task<int> GetStatesCountAsync();
+        #endregion
 
-        //State methods
-        public void AddState(string stateId, string productId);
-        public IState GetState(string id);
-        public IEnumerable<IState> GetAllStates();
-        public void DeleteState(string id); // If we have a state
-        public bool StateExists(string id);
-        public bool IsAvailable(string id);
-        public void ChangeAvailability(string id);
-
-        //Event methods
-
-        public void AddEvent(string event_type, string eventId, string stateId, string userId);
-        public IEnumerable<IEvent> GetAllEvents();
-        public void DeleteEvent(string id);
-
-
+        #region Event CRUD
+        Task AddEventAsync(int id, int stateId, int userId, string type, int quantity = 0);
+        Task<IEvent> GetEventAsync(int id, string type);
+        Task UpdateEventAsync(int id, int stateId, int userId, string type);
+        Task DeleteEventAsync(int id);
+        Task<Dictionary<int, IEvent>> GetAllEventsAsync();
+        Task<int> GetEventsCountAsync();
+        #endregion
     }
 }

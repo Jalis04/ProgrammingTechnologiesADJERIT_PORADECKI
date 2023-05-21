@@ -7,44 +7,42 @@ namespace DataLayerTests
     [TestClass]
     public class DataLayerStaticTests
     {
+        private readonly IDataRepository _dataRepository = IDataRepository.CreateDatabase();
 
         [TestMethod]
-        public void TestDataRepositoryWithUser()
+        public async Task UserTests()
         {
-            IDataRepository dataRepository = IDataRepository.CreateDataRepository();
-            dataRepository.AddUser("01", "John", "Doe");
-            dataRepository.AddUser("02", "Tom", "Eod");
+            int userId = 1;
 
-            Assert.IsTrue(dataRepository.UserExists("01"));
-            Assert.IsFalse(dataRepository.UserExists("01" + 1));
+            await _dataRepository.AddUserAsync(userId, "John", "Smith");
 
-            dataRepository.DeleteUser("01");
-            Assert.IsFalse(dataRepository.UserExists("01"));
+            IUser user = await _dataRepository.GetUserAsync(userId);
 
-        }
+            Assert.IsNotNull(user);
+            Assert.AreEqual(userId, user.id);
+            Assert.AreEqual("John", user.firstName);
+            Assert.AreEqual("Smith", user.lastName);
 
-        [TestMethod]
-        public void TestDataRepositoryWithProduct()
-        {
-            IDataRepository dataRepository = IDataRepository.CreateDataRepository();
-            dataRepository.AddProduct("01", "Black coffee", "Description", 3.99f);
-            dataRepository.AddProduct("02", "White coffee", "Description2", 4.49f);
+            Assert.IsNotNull(await _dataRepository.GetAllUsersAsync());
+            Assert.IsTrue(await _dataRepository.GetUsersCountAsync() > 0);
 
-            Assert.IsTrue(dataRepository.ProductExists("01"));
-            Assert.IsFalse(dataRepository.ProductExists("01" + 1));
+            await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.GetUserAsync(userId + 2));
 
-            dataRepository.DeleteProduct("02");
-            Assert.IsFalse(dataRepository.UserExists("02"));
-        }
+            await _dataRepository.UpdateUserAsync(userId, "Tom", "ABC");
 
-        [TestMethod]
-        public void TestDataRepositoryWithEvents()
-        {
-            IDataRepository dataRepository = IDataRepository.CreateDataRepository();
-            dataRepository.AddEvent("Pay", "01", "01", "01");
-            dataRepository.AddEvent("Place", "02", "03", "04");
-            dataRepository.DeleteEvent("02");
+            IUser userUpdated = await _dataRepository.GetUserAsync(userId);
 
+            Assert.IsNotNull(userUpdated);
+            Assert.AreEqual(userId, userUpdated.id);
+            Assert.AreEqual("Tom", userUpdated.firstName);
+            Assert.AreEqual("ABC", userUpdated.lastName);
+
+            await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.UpdateUserAsync(userId + 2,
+                "Tom", "ABC"));
+
+            await _dataRepository.DeleteUserAsync(userId);
+            await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.GetUserAsync(userId));
+            await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.DeleteUserAsync(userId));
         }
     }
 }

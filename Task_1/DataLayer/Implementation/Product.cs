@@ -4,13 +4,13 @@ namespace   DataLayer.Implementation
 {
     internal class Product : IProduct
     {
-        public string id { get; set; }
+        public int id { get; set; }
         public string productName { get; set; }
         public string productDescription { get; set; }
         public float price { get; set; }
 
 
-        public Product(string id, string productName, string productDescription, float price)
+        public Product(int id, string productName, string productDescription, float price)
         {
             this.id = id;
             this.productName = productName;
