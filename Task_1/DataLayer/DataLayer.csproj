@@ -25,18 +25,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Update="Instrumentation\CoffeeShop.designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>CoffeeShop.dbml</DependentUpon>
-		</Compile>
+	  <Compile Update="Instrumentation\CoffeeShop.designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>CoffeeShop.dbml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="Instrumentation\CoffeeShop.dbml">
-			<Generator>MSLinqToSQLGenerator</Generator>
-			<LastGenOutput>CoffeeShop.designer.cs</LastGenOutput>
-		</None>
+	  <None Update="Instrumentation\CoffeeShop.dbml">
+	    <Generator>MSLinqToSQLGenerator</Generator>
+	    <LastGenOutput>CoffeeShop.designer.cs</LastGenOutput>
+	  </None>
 	</ItemGroup>
 
 </Project>
