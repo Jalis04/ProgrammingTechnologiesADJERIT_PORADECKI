@@ -7,13 +7,12 @@ internal class StateDTO : IStateDTO
     public int productId { get; }
     public int stateId { get; set; }
 
-    //bool available { get; set; }
-    public int available { get; set; } //db does not support bool
+    public bool available { get; set; } 
 
-    public StateDTO(int id, int productId, int quantity)
+    public StateDTO(int id, int productId, bool quantity)
     {
         this.stateId = id;
         this.productId = productId;
-        this.available = quantity;
+        this.available = available;
     }
 }

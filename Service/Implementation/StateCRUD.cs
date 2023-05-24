@@ -14,10 +14,10 @@ internal class StateCRUD : IStateCRUD
 
     private IStateDTO Map(IState state)
     {
-        return new StateDTO(state.stateId, state.productId, Convert.ToInt32(state.available));
+        return new StateDTO(state.stateId, state.productId, state.available);
     }
 
-    public async Task AddStateAsync(int id, int productId, int quantity)
+    public async Task AddStateAsync(int id, int productId, bool available)
     {
         await _repository.AddStateAsync(id, productId);
     }
@@ -27,7 +27,7 @@ internal class StateCRUD : IStateCRUD
         return this.Map(await this._repository.GetStateAsync(id));
     }
 
-    public async Task UpdateStateAsync(int id, int productId, int quantity)
+    public async Task UpdateStateAsync(int id, int productId, bool available)
     {
         await this._repository.UpdateStateAsync(id, productId);
     }

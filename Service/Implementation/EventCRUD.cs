@@ -18,14 +18,14 @@ internal class EventCRUD : IEventCRUD
         return new EventDTO(currentEvent.eventId, currentEvent.stateId, currentEvent.userId, currentEvent.type);
     }
 
-    public async Task AddEventAsync(int id, int stateId, int userId, DateTime occurrenceDate, string type, int quantity = 0)
+    public async Task AddEventAsync(int id, int stateId, int userId, string type)
     {
         await this._repository.AddEventAsync(id, stateId, userId, type);
     }
 
-    public async Task<IEventDTO> GetEventAsync(int id, string type)
+    public async Task<IEventDTO> GetEventAsync(int id)
     {
-        return this.Map(await this._repository.GetEventAsync(id, type));
+        return this.Map(await this._repository.GetEventAsync(id));
     }
 
     public async Task UpdateEventAsync(int id, int stateId, int userId, string type)
@@ -53,10 +53,5 @@ internal class EventCRUD : IEventCRUD
     public async Task<int> GetEventsCountAsync()
     {
         return await this._repository.GetEventsCountAsync();
-    }
-
-    public Task AddEventAsync(int id, int stateId, int userId, string type)
-    {
-        throw new NotImplementedException();
     }
 }
