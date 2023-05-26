@@ -86,7 +86,7 @@ namespace ServiceTest
             Assert.IsNotNull(state);
             Assert.AreEqual(1, state.stateId);
             Assert.AreEqual(1, state.productId);
-            Assert.AreEqual(false, state.available);
+            Assert.AreEqual(true, state.available);
 
             await stateCrud.UpdateStateAsync(1, product.id, false);
 
@@ -102,7 +102,7 @@ namespace ServiceTest
         }
 
         [TestMethod]
-        public async Task PurchaseEventServiceTests()
+        public async Task PlaceEventServiceTests()
         {
             IProductCRUD productCrud = IProductCRUD.CreateProductCRUD(this._repository);
             //int id, string productName, string productDescription, float price
@@ -125,7 +125,7 @@ namespace ServiceTest
 
             IEventCRUD eventCrud = IEventCRUD.CreateEventCRUD(this._repository);
             //int id, int stateId, int userId, DateTime occurrenceDate, string type, int quantity = 0
-            await eventCrud.AddEventAsync(1, state.stateId, user.id, "PurchaseEvent");
+            await eventCrud.AddEventAsync(1, state.stateId, user.id, "PlacedEvent");
 
             user = await userCrud.GetUserAsync(1);
             state = await stateCrud.GetStateAsync(1);
@@ -139,79 +139,43 @@ namespace ServiceTest
         }
 
         [TestMethod]
-        public async Task ReturnEventServiceTests()
+        public async Task PayedEventServiceTests()
         {
             IProductCRUD productCrud = IProductCRUD.CreateProductCRUD(this._repository);
 
             //int id, string productName, string productDescription, float price
-            await productCrud.AddProductAsync(2, "Cappucino", "Flavorful", 2);
+            await productCrud.AddProductAsync(1, "Cappucino", "Flavorful", 2);
 
-            IProductDTO product = await productCrud.GetProductAsync(2);
-
-            IStateCRUD stateCrud = IStateCRUD.CreateStateCRUD(this._repository);
-
-            await stateCrud.AddStateAsync(2, product.id, true);
-
-            IStateDTO state = await stateCrud.GetStateAsync(2);
-
-            IUserCRUD userCrud = IUserCRUD.CreateUserCRUD(this._repository);
-
-            await userCrud.AddUserAsync(2, "John", "Doe");
-
-            IUserDTO user = await userCrud.GetUserAsync(2);
-
-            IEventCRUD eventCrud = IEventCRUD.CreateEventCRUD(this._repository);
-
-            await eventCrud.AddEventAsync(2, state.stateId, user.id, "PlaceEvent");
-
-            await eventCrud.AddEventAsync(3, state.stateId, user.id, "PayOrderEvent");
-
-            user = await userCrud.GetUserAsync(2);
-            state = await stateCrud.GetStateAsync(2);
-
-            Assert.AreEqual(10, state.available);
-
-            await eventCrud.DeleteEventAsync(2);
-            await eventCrud.DeleteEventAsync(3);
-            await stateCrud.DeleteStateAsync(2);
-            await productCrud.DeleteProductAsync(2);
-            await userCrud.DeleteUserAsync(2);
-        }
-
-        [TestMethod]
-        public async Task SupplyEventServiceTests()
-        {
-            IProductCRUD productCrud = IProductCRUD.CreateProductCRUD(this._repository);
-
-            //int id, string productName, string productDescription, float price
-            await productCrud.AddProductAsync(4, "Cappucino", "Flavorful", 2);
-
-            IProductDTO product = await productCrud.GetProductAsync(4);
+            IProductDTO product = await productCrud.GetProductAsync(1);
 
             IStateCRUD stateCrud = IStateCRUD.CreateStateCRUD(this._repository);
 
-            await stateCrud.AddStateAsync(4, product.id, true);
+            await stateCrud.AddStateAsync(1, product.id, true);
 
-            IStateDTO state = await stateCrud.GetStateAsync(4);
+            IStateDTO state = await stateCrud.GetStateAsync(1);
 
             IUserCRUD userCrud = IUserCRUD.CreateUserCRUD(this._repository);
 
-            await userCrud.AddUserAsync(4, "John", "Doe");
+            await userCrud.AddUserAsync(1, "John", "Doe");
 
-            IUserDTO user = await userCrud.GetUserAsync(4);
+            IUserDTO user = await userCrud.GetUserAsync(1);
 
             IEventCRUD eventCrud = IEventCRUD.CreateEventCRUD(this._repository);
 
-            await eventCrud.AddEventAsync(4, state.stateId, user.id, "SupplyEvent");
+            await eventCrud.AddEventAsync(1, state.stateId, user.id, "PlacedEvent");
 
-            state = await stateCrud.GetStateAsync(4);
+            await eventCrud.AddEventAsync(2, state.stateId, user.id, "PayedEvent");
+
+            user = await userCrud.GetUserAsync(1);
+            state = await stateCrud.GetStateAsync(1);
 
             Assert.AreEqual(true, state.available);
 
-            await eventCrud.DeleteEventAsync(4);
-            await stateCrud.DeleteStateAsync(4);
-            await productCrud.DeleteProductAsync(4);
-            await userCrud.DeleteUserAsync(4);
+            await eventCrud.DeleteEventAsync(2);
+            await eventCrud.DeleteEventAsync(1);
+            await stateCrud.DeleteStateAsync(1);
+            await productCrud.DeleteProductAsync(1);
+            await userCrud.DeleteUserAsync(1);
         }
     }
 }
