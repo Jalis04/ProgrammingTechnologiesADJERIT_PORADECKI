@@ -1,5 +1,6 @@
 using DataLayer.API;
 using DataLayer.Implementation;
+using DataLayer.Instrumentation;
 using System.Data.Common;
 
 namespace DataLayerTests
@@ -40,9 +41,23 @@ namespace DataLayerTests
             await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.UpdateUserAsync(userId + 2,
                 "Tom", "ABC"));
 
-            //await _dataRepository.DeleteUserAsync(userId);
-            //await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.GetUserAsync(userId));
-            //await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.DeleteUserAsync(userId));
+            await _dataRepository.DeleteUserAsync(userId);
+            await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.GetUserAsync(userId));
+            await Assert.ThrowsExceptionAsync<Exception>(async () => await _dataRepository.DeleteUserAsync(userId));
+        }
+
+        [TestMethod]
+        public async Task EventTests()
+        {
+            await _dataRepository.AddUserAsync(1, "John", "Smith");
+            await _dataRepository.AddProductAsync(1, "Coffee", "Regular", 3.99f);
+            await _dataRepository.AddStateAsync(1, 1, true);
+            await _dataRepository.AddEventAsync(1, 1, 1, "PlaceEvent");
+
+            await _dataRepository.DeleteEventAsync(1);
+            await _dataRepository.DeleteUserAsync(1);
+            await _dataRepository.DeleteStateAsync(1);
+            await _dataRepository.DeleteProductAsync(1);
         }
     }
 }
