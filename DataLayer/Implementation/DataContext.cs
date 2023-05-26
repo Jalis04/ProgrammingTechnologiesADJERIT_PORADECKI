@@ -231,7 +231,7 @@ namespace DataLayer.Implementation
                     return query.FirstOrDefault();
                 });
 
-                return state is not null ? new State(state.StateId, state.ProductId) : null;
+                return state is not null ? new State(state.StateId, state.ProductId, state.Availavle) : null;
             }
         }
 
@@ -266,7 +266,7 @@ namespace DataLayer.Implementation
             {
                 IQueryable<IState> stateQuery = from s in context.States
                                                 select
-                                                    new State(s.StateId, s.ProductId) as IState;
+                                                    new State(s.StateId, s.ProductId, s.Availavle) as IState;
 
                 return await Task.Run(() => stateQuery.ToDictionary(k => k.stateId));
             }

@@ -4,7 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Presentation.View"
-      xmlns:ViewModel="clr-namespace:Presentation.ViewModel" x:Class="Presentation.View.StateMasterView"
+      xmlns:view="clr-namespace:Presentation.View"
+      xmlns:viewmodels="clr-namespace:Presentation.ViewModel" x:Class="Presentation.View.StateMasterView"
       mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="800">
 
@@ -13,18 +14,20 @@
         <UserControl 
             d:DesignHeight="480" d:DesignWidth="800" Margin="0,0,0,-30">
 
+            <UserControl.DataContext>
+                <ObjectDataProvider ObjectType="{x:Type viewmodels:StateMasterViewModel}">
+                    <ObjectDataProvider.ConstructorParameters>
+                        <x:Null/>
+                        <x:Null/>
+                    </ObjectDataProvider.ConstructorParameters>
+                </ObjectDataProvider>
+            </UserControl.DataContext>
+
             <Grid>
 
                 <UserControl Margin="0,0,0,-30" Grid.RowSpan="2">
 
-                    <UserControl.DataContext>
-                        <ObjectDataProvider ObjectType="{x:Type ViewModel:StateMasterViewModel}">
-                            <ObjectDataProvider.ConstructorParameters>
-                                <x:Null/>
-                                <x:Null/>
-                            </ObjectDataProvider.ConstructorParameters>
-                        </ObjectDataProvider>
-                    </UserControl.DataContext>
+                   
 
                     <Grid Background="White" Margin="0,0,0,0">
                         <Button Content="States" Margin="636,0,74,0" VerticalAlignment="Top" Height="50"
@@ -37,8 +40,7 @@
                             Command="{Binding SwitchToUserMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
                         <ListView Margin="10,127,450,40" 
                             ItemsSource="{Binding States, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            SelectedItem="{Binding SelectedDetailViewModel}" d:ItemsSource="{d:SampleData ItemCount=5}" Height="340"
-                    >
+                            SelectedItem="{Binding SelectedDetailViewModel}" d:ItemsSource="{d:SampleData ItemCount=5}" Height="340">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Id" Width="110" DisplayMemberBinding="{Binding Id}"/>
@@ -49,7 +51,7 @@
                             </ListView.View>
                         </ListView>
 
-                        <local:StateDetailView
+                        <view:StateDetailView
                             Margin="355,92,217,48"
                             DataContext="{Binding SelectedDetailViewModel}" Height="340" Width="220"
                         />

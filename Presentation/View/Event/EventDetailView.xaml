@@ -28,7 +28,7 @@
                         Background="White" Height="233">
                 <Label Content="Event id:" HorizontalAlignment="Center"/>
                 <TextBox Height="20" Width="120"
-                         Text="{Binding EventId, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                         Text="{Binding Id, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                          TextWrapping="Wrap"
                          BorderBrush="Gray" IsReadOnly="True">
                     <Validation.ErrorTemplate>
@@ -72,7 +72,7 @@
                 </TextBox>
                 <Label Content="Event date:" Width="70"/>
                 <TextBox Height="20" Width="120"
-                    Text="{Binding EventDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                    Text="{Binding EventDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:MM/dd/yyyy}}"
                     TextWrapping="Wrap"
                     BorderBrush="Gray" IsReadOnly="True">
                     <Validation.ErrorTemplate>

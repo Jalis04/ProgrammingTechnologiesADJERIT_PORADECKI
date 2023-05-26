@@ -19,7 +19,7 @@ internal class StateCRUD : IStateCRUD
 
     public async Task AddStateAsync(int id, int productId, bool available)
     {
-        await _repository.AddStateAsync(id, productId);
+        await _repository.AddStateAsync(id, productId, available);
     }
 
     public async Task<IStateDTO> GetStateAsync(int id)
@@ -29,7 +29,7 @@ internal class StateCRUD : IStateCRUD
 
     public async Task UpdateStateAsync(int id, int productId, bool available)
     {
-        await this._repository.UpdateStateAsync(id, productId);
+        await this._repository.UpdateStateAsync(id, productId, available);
     }
 
     public async Task DeleteStateAsync(int id)

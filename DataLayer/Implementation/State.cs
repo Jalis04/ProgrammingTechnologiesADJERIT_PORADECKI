@@ -5,11 +5,11 @@ namespace DataLayer.Implementation
     internal class State : IState
     {
 
-        public State(int stateId, int productId)
+        public State(int stateId, int productId, bool available)
         {
             this.stateId = stateId;
             this.productId = productId;
-            available = true;
+            this.available = available;
         }
 
         public int productId { get; }

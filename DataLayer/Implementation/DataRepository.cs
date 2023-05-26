@@ -113,12 +113,12 @@ namespace DataLayer.Implementation
 
         #region State CRUD
 
-        public async Task AddStateAsync(int id, int productId)
+        public async Task AddStateAsync(int id, int productId, bool available)
         {
             if (!await this._context.CheckIfProductExists(productId))
                 throw new Exception("This product does not exist!");
 
-            IState state = new State(id, productId);
+            IState state = new State(id, productId, available);
 
             await this._context.AddStateAsync(state);
         }
@@ -133,12 +133,12 @@ namespace DataLayer.Implementation
             return state;
         }
 
-        public async Task UpdateStateAsync(int id, int productId)
+        public async Task UpdateStateAsync(int id, int productId, bool available)
         {
             if (!await this._context.CheckIfProductExists(productId))
                 throw new Exception("This product does not exist!");
 
-            IState state = new State(id, productId);
+            IState state = new State(id, productId, available);
 
             if (!await this.CheckIfStateExists(state.stateId))
                 throw new Exception("This state does not exist");
@@ -171,37 +171,14 @@ namespace DataLayer.Implementation
 
         public async Task AddEventAsync(int id, int stateId, int userId, string type)
         {
-            IEvent newEvent;
 
             IUser user = await this.GetUserAsync(userId);
             IState state = await this.GetStateAsync(stateId);
             IProduct product = await this.GetProductAsync(state.productId);
 
-            switch (type)
-            {
-                case "PlacedOrder":
-                    newEvent = new Event(id, stateId, userId, type);
+            IEvent newEvent = new Event(id, stateId, userId, type);
 
-                    if (state.available == false)
-                        throw new Exception("Product unavailable, please check later!");
-
-                    await this.UpdateStateAsync(stateId, product.id);
-                    await this.UpdateUserAsync(userId, user.firstName, user.lastName);
-
-                    break;
-
-                case "PayedOrder":
-                    newEvent = new Event(id, stateId, userId, type);
-
-                    Dictionary<int, IEvent> events = await this.GetAllEventsAsync();
-                    Dictionary<int, IState> states = await this.GetAllStatesAsync();
-
-                    int copiesBought = 0;
-
-                    break;
-            }
-
-            //await this._context.AddEventAsync(newEvent, type);
+            await this._context.AddEventAsync(newEvent);
         }
 
         public async Task<IEvent> GetEventAsync(int id)

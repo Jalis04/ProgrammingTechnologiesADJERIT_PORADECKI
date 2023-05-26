@@ -29,9 +29,9 @@ namespace DataLayer.API
         #endregion
 
         #region State CRUD
-        Task AddStateAsync(int id, int productId);
+        Task AddStateAsync(int id, int productId, bool available);
         Task<IState> GetStateAsync(int id);
-        Task UpdateStateAsync(int id, int productId);
+        Task UpdateStateAsync(int id, int productId, bool available);
         Task DeleteStateAsync(int id);
         Task<Dictionary<int, IState>> GetAllStatesAsync();
         Task<int> GetStatesCountAsync();

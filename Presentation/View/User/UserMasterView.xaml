@@ -18,6 +18,10 @@
     </UserControl.DataContext>
 
     <Grid Background="White" Margin="0,0,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="171*"/>
+            <RowDefinition Height="79*"/>
+        </Grid.RowDefinitions>
         <Button Content="States" Margin="636,0,74,0" VerticalAlignment="Top" Height="50"
                 Command="{Binding SwitchToStateMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
         <Button Content="Events" Margin="446,0,264,0" VerticalAlignment="Top" Height="50"
@@ -28,7 +32,7 @@
             Command="{Binding SwitchToUserMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
         <ListView Margin="10,127,450,40" 
                     ItemsSource="{Binding Users, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    SelectedItem="{Binding SelectedDetailViewModel}" SelectionChanged="ListView_SelectionChanged" d:ItemsSource="{d:SampleData ItemCount=5}"
+                    SelectedItem="{Binding SelectedDetailViewModel}" SelectionChanged="ListView_SelectionChanged" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.RowSpan="2"
                     >
             <ListView.View>
                 <GridView>
@@ -40,11 +44,11 @@
         </ListView>
 
         <view:UserDetailView
-                        Margin="355,92,217,48"
-                        DataContext="{Binding SelectedDetailViewModel}" Height="340" Width="220"
+                        Margin="359,102,221,58"
+                        DataContext="{Binding SelectedDetailViewModel}" Height="340" Width="220" Grid.RowSpan="2"
                         />
-        <Button Content="Delete" Background="Azure" HorizontalAlignment="Left" Margin="420,393,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
-            Command="{Binding RemoveUser}" Click="Button_Click"/>
+        <Button Content="Delete" Background="Azure" HorizontalAlignment="Left" Margin="420,51,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
+            Command="{Binding RemoveUser}" Click="Button_Click" Grid.Row="1"/>
         <Button Content="Add" Background="Azure" HorizontalAlignment="Left" Margin="635,284,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="91"
             Command="{Binding CreateUser}" Click="Button_Click"/>
         <StackPanel Margin="594,142,0,0"
