@@ -9,7 +9,7 @@ internal class StateDTO : IStateDTO
 
     public bool available { get; set; } 
 
-    public StateDTO(int id, int productId, bool quantity)
+    public StateDTO(int id, int productId, bool available)
     {
         this.stateId = id;
         this.productId = productId;
