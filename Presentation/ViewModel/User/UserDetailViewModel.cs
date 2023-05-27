@@ -2,8 +2,6 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Presentation.Model.API;
-using Presentation.ViewModel.User;
-
 namespace Presentation.ViewModel;
 
 internal class UserDetailViewModel : IViewModel, IUserDetailViewModel

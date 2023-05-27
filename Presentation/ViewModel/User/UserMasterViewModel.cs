@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Presentation.Model.API;
-using Presentation.ViewModel.User;
 
 namespace Presentation.ViewModel;
 

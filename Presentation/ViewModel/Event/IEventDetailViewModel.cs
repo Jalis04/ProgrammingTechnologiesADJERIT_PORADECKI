@@ -6,8 +6,8 @@ namespace Presentation.ViewModel;
 
 public interface IEventDetailViewModel
 {
-    static IEventDetailViewModel CreateViewModel(int id, int stateId, int userId, DateTime occurrenceDate, 
-        string type, int? quantity, IEventModelOperation model, IErrorInformer informer)
+    static IEventDetailViewModel CreateViewModel(int id, int stateId, int userId, 
+        string type, IEventModelOperation model, IErrorInformer informer)
     {
         return new EventDetailViewModel(id, stateId, userId, type, model, informer);
     }
@@ -19,8 +19,6 @@ public interface IEventDetailViewModel
     int StateId { get; set; }
 
     int UserId { get; set; }
-
-    DateTime OccurrenceDate { get; set; }
 
     string Type { get; set; }
 }

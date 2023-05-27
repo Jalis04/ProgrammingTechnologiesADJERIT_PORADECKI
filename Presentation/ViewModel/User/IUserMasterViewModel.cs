@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 
-namespace Presentation.ViewModel.User
+namespace Presentation.ViewModel
 {
     public interface IUserMasterViewModel
     {
