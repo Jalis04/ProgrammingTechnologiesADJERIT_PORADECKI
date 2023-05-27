@@ -4,7 +4,7 @@ namespace Service.Implementation;
 
 internal class StateDTO : IStateDTO
 {
-    public int productId { get; }
+    public int productId { get; set; }
     public int stateId { get; set; }
 
     public bool available { get; set; } 
