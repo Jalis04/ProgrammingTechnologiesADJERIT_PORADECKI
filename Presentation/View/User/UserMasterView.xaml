@@ -44,18 +44,18 @@
         </ListView>
 
         <view:UserDetailView
-                        Margin="359,102,221,58"
+                        Margin="355,92,217,48"
                         DataContext="{Binding SelectedDetailViewModel}" Height="340" Width="220" Grid.RowSpan="2"
                         />
-        <Button Content="Delete" Background="Azure" HorizontalAlignment="Left" Margin="420,51,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
+        <Button Content="Delete" Background="Azure" HorizontalAlignment="Left" Margin="420,58,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
             Command="{Binding RemoveUser}" Click="Button_Click" Grid.Row="1"/>
-        <Button Content="Add" Background="Azure" HorizontalAlignment="Left" Margin="635,284,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="91"
+        <Button Content="Add" Background="Azure" HorizontalAlignment="Left" Margin="641,252,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="91"
             Command="{Binding CreateUser}" Click="Button_Click"/>
         <StackPanel Margin="594,142,0,0"
             VerticalAlignment="Top"
             Background="White" Height="92" HorizontalAlignment="Left" Width="186">
-            <Label Content="First name:" FontSize="10"/>
-            <TextBox Height="20" Width="120" Margin="50,0,10,0"
+            <Label Content="First name:" FontSize="10" Width="57"/>
+            <TextBox Height="20" Width="120"
                 Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                 TextWrapping="Wrap"
                 BorderBrush="Gray">
@@ -69,8 +69,8 @@
                 </Validation.ErrorTemplate>
             </TextBox>
 
-            <Label Content="Last name:" FontSize="10"/>
-            <TextBox Height="20" Width="120" Margin="50,0,10,0"
+            <Label Content="Last name:" FontSize="10" Width="57"/>
+            <TextBox Height="20" Width="120"
                 Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                 TextWrapping="Wrap"
                 BorderBrush="Gray">

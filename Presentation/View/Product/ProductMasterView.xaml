@@ -48,7 +48,7 @@
                     Margin="355,92,217,48"
                     DataContext="{Binding SelectedDetailViewModel}" Height="340" Width="220"
                         />
-                <Button Content="Add" Background="Azure" HorizontalAlignment="Left" Margin="642,319,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
+                <Button Content="Add" Background="Azure" HorizontalAlignment="Left" Margin="642,300,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
                     Command="{Binding CreateProduct}"/>
                 <StackPanel Margin="594,142,0,0"
                     VerticalAlignment="Top"
@@ -102,6 +102,8 @@
 
             </Grid>
         </UserControl>
+        <Button Content="Delete" Background="Azure" HorizontalAlignment="Left" Margin="420,397,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
+            Command="{Binding RemoveProduct}"/>
 
 
     </Grid>

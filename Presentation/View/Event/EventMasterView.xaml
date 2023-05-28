@@ -55,8 +55,8 @@
                 <StackPanel Margin="594,142,0,0"
                     VerticalAlignment="Top"
                     Background="White" Height="92" HorizontalAlignment="Left" Width="186">
-                    <Label Content="State ID:" FontSize="10"/>
-                    <TextBox Height="20" Width="120" Margin="50,0,10,0"
+                    <Label Content="State ID:" FontSize="10" Width="47"/>
+                    <TextBox Height="20" Width="120"
                         Text="{Binding StateId, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                         TextWrapping="Wrap"
                         BorderBrush="Gray">
@@ -70,8 +70,8 @@
                         </Validation.ErrorTemplate>
                     </TextBox>
 
-                    <Label Content="User ID:" FontSize="10"/>
-                    <TextBox Height="20" Width="120" Margin="50,0,10,0"
+                    <Label Content="User ID:" FontSize="10" Width="45"/>
+                    <TextBox Height="20" Width="120"
                         Text="{Binding UserId, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                         TextWrapping="Wrap"
                         BorderBrush="Gray">
@@ -90,6 +90,8 @@
 
             </Grid>
         </UserControl>
+        <Button Content="Delete" Background="Azure" HorizontalAlignment="Left" Margin="420,397,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
+            Command="{Binding RemoveEvent}"/>
 
 
     </Grid>
