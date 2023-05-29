@@ -13,7 +13,7 @@
         <UserControl d:DesignWidth="800" Margin="0,0,0,-30" Grid.RowSpan="2">
 
             <UserControl.DataContext>
-                <ObjectDataProvider ObjectType="{x:Type ViewModel:EventMasterViewModel}">
+                <ObjectDataProvider ObjectType="ViewModel:EventMasterViewModel">
                     <ObjectDataProvider.ConstructorParameters>
                         <x:Null/>
                         <x:Null/>
@@ -22,10 +22,13 @@
             </UserControl.DataContext>
 
             <Grid Background="White" Margin="0,0,0,0">
+                <local:EventDetailView
+                    Margin="355,92,217,48"
+                    DataContext="{Binding SelectedDetailViewModel}" Height="340" Width="220"
+                        />
                 <Button Content="States" Margin="636,0,74,0" VerticalAlignment="Top" Height="50"
                     Command="{Binding SwitchToStateMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Button Content="Events" Margin="446,0,264,0" VerticalAlignment="Top" Height="50"
-                    Command="{Binding SwitchToEventMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Button Content="Events" Margin="446,0,264,0" VerticalAlignment="Top" Height="50"/>
                 <Button Content="Products" HorizontalAlignment="Left" Margin="264,0,0,0" VerticalAlignment="Top" Width="90" Height="50"
                     Command="{Binding SwitchToProductMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
                 <Button Content="Users" HorizontalAlignment="Left" Margin="74,0,0,0" VerticalAlignment="Top" Width="90" Height="50"
@@ -44,10 +47,9 @@
                     </ListView.View>
                 </ListView>
 
-                <local:EventDetailView
-                    Margin="355,92,217,48"
-                    DataContext="{Binding SelectedDetailViewModel}" Height="340" Width="220"
-                        />
+                <Button Content="Delete" Background="Azure" HorizontalAlignment="Left" Margin="420,397,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
+                Command="{Binding RemoveEvent}"/>
+
                 <Button Content="Place" Background="Azure" HorizontalAlignment="Left" Margin="642,255,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
                     Command="{Binding PlacedEvent}" Click="Button_Click"/>
                 <Button Content="Pay" Background="Azure" HorizontalAlignment="Left" Margin="642,300,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
@@ -90,8 +92,6 @@
 
             </Grid>
         </UserControl>
-        <Button Content="Delete" Background="Azure" HorizontalAlignment="Left" Margin="420,397,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
-            Command="{Binding RemoveEvent}"/>
 
 
     </Grid>
