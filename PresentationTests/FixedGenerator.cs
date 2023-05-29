@@ -44,7 +44,6 @@ internal class FixedGenerator : IGenerator
     {
         IEventCRUD eventCrud = IEventCRUD.CreateEventCRUD(this._repository);
         IEventModelOperation operation = IEventModelOperation.CreateModelOperation(eventCrud);
-        //int id, int stateId, int userId, DateTime occurrenceDate, string type,
         viewModel.Events.Add(IEventDetailViewModel.CreateViewModel(1, 1, 1, "PlacedEvent", operation, _informer));
         viewModel.Events.Add(IEventDetailViewModel.CreateViewModel(2, 2, 2, "PayedEvent", operation, _informer));
 
