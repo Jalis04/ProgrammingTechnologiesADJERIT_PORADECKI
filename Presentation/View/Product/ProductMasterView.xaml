@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Presentation.View"
-      xmlns:ViewModel="clr-namespace:Presentation.ViewModel" x:Class="Presentation.View.ProductMasterView"
+      xmlns:viewmodels="clr-namespace:Presentation.ViewModel" x:Class="Presentation.View.ProductMasterView"
       mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="800">
 
@@ -13,7 +13,7 @@
         <UserControl d:DesignWidth="800" Margin="0,0,0,-30" Grid.RowSpan="2">
 
             <UserControl.DataContext>
-                <ObjectDataProvider ObjectType="{x:Type ViewModel:ProductMasterViewModel}">
+                <ObjectDataProvider ObjectType="viewmodels:ProductMasterViewModel">
                     <ObjectDataProvider.ConstructorParameters>
                         <x:Null/>
                         <x:Null/>
@@ -26,13 +26,12 @@
                     Command="{Binding SwitchToStateMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
                 <Button Content="Events" Margin="446,0,264,0" VerticalAlignment="Top" Height="50"
                     Command="{Binding SwitchToEventMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-                <Button Content="Products" HorizontalAlignment="Left" Margin="264,0,0,0" VerticalAlignment="Top" Width="90" Height="50"
-                    Command="{Binding SwitchToProductMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                <Button Content="Products" HorizontalAlignment="Left" Margin="264,0,0,0" VerticalAlignment="Top" Width="90" Height="50" />
                 <Button Content="Users" HorizontalAlignment="Left" Margin="74,0,0,0" VerticalAlignment="Top" Width="90" Height="50"
                     Command="{Binding SwitchToUserMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
                 <ListView Margin="10,127,450,40" 
                     ItemsSource="{Binding Products, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    SelectedItem="{Binding SelectedDetailViewModel}" d:ItemsSource="{d:SampleData ItemCount=5}" Height="340"
+                    SelectedItem="{Binding SelectedDetailViewModel}" Height="340"
                     >
                     <ListView.View>
                         <GridView>
@@ -43,11 +42,12 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-
                 <local:ProductDetailView
                     Margin="355,92,217,48"
                     DataContext="{Binding SelectedDetailViewModel}" Height="340" Width="220"
                         />
+                <Button Content="Delete" Background="Azure" HorizontalAlignment="Left" Margin="420,397,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
+                    Command="{Binding RemoveProduct}"/>
                 <Button Content="Add" Background="Azure" HorizontalAlignment="Left" Margin="642,300,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
                     Command="{Binding CreateProduct}"/>
                 <StackPanel Margin="594,142,0,0"
@@ -102,8 +102,7 @@
 
             </Grid>
         </UserControl>
-        <Button Content="Delete" Background="Azure" HorizontalAlignment="Left" Margin="420,397,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
-            Command="{Binding RemoveProduct}"/>
+
 
 
     </Grid>
