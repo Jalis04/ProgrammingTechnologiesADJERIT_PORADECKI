@@ -20,5 +20,7 @@ public interface IEventDetailViewModel
 
     int UserId { get; set; }
 
+    DateTime EventDate { get; set; }
+
     string Type { get; set; }
 }

@@ -49,15 +49,15 @@ internal class EventDetailViewModel : IViewModel, IEventDetailViewModel
         }
     }
 
-    private DateTime _occurrenceDate;
+    private DateTime _eventDate;
 
-    public DateTime OccurrenceDate
+    public DateTime EventDate
     {
-        get => _occurrenceDate;
+        get => _eventDate;
         set
         {
-            _occurrenceDate = value;
-            OnPropertyChanged(nameof(OccurrenceDate));
+            _eventDate = value;
+            OnPropertyChanged(nameof(EventDate));
         }
     }
 
@@ -91,7 +91,7 @@ internal class EventDetailViewModel : IViewModel, IEventDetailViewModel
         this.Id = id;
         this.StateId = stateId;
         this.UserId = userId;
-        this.OccurrenceDate = DateTime.Now;
+        this.EventDate = DateTime.Now;
         this.Type = type;
     }
 
@@ -108,7 +108,7 @@ internal class EventDetailViewModel : IViewModel, IEventDetailViewModel
     private bool CanUpdate()
     {
         return !(
-            string.IsNullOrWhiteSpace(this.OccurrenceDate.ToString())
+            string.IsNullOrWhiteSpace(this.EventDate.ToString())
         );
     }
 }
