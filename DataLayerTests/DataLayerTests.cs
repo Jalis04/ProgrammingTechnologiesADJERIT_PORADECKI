@@ -6,9 +6,23 @@ using System.Data.Common;
 namespace DataLayerTests
 {
     [TestClass]
+    [DeploymentItem("CoffeeShopTestDB.mdf")]
     public class DataLayerTests
     {
-        private readonly IDataRepository _dataRepository = IDataRepository.CreateDatabase();
+        private static string testConnectionString;
+
+        private readonly IDataRepository _dataRepository = IDataRepository.CreateDatabase(IDataContext.CreateContext(testConnectionString));
+
+        [ClassInitialize]
+        public static void InitializeDataLayerTests(TestContext context)
+        {
+            string _DBRelativePath = @"CoffeeShopTestDB.mdf";
+            string _projectRootDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+            string _DBPath = Path.Combine(_projectRootDir, _DBRelativePath);
+            FileInfo _databaseFile = new FileInfo(_DBPath);
+            Assert.IsTrue(_databaseFile.Exists, $"{Environment.CurrentDirectory}");
+            testConnectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={_DBPath};Integrated Security = True; Connect Timeout = 30;";
+        }
 
         [TestMethod]
         public async Task UserTests()
