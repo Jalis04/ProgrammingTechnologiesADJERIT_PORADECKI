@@ -54,7 +54,7 @@ namespace DataLayer.Implementation
                         from u in context.Users
                         where u.Id == id
                         select u;
-
+                    //IQueryable<Instrumentation.User> query = context.Users.Where(u => u.Id == id);
                     return query.FirstOrDefault();
                 });
 
