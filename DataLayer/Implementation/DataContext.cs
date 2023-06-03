@@ -44,7 +44,7 @@ namespace DataLayer.Implementation
             }
         }
 
-        public async Task<IUser?> GetUserAsync(int id)
+        public async Task<IUser?> GetUserAsyncQuerySyntax(int id)
         {
             using (CoffeeShopDataContext context = new CoffeeShopDataContext(this.ConnectionString))
             {
@@ -54,7 +54,22 @@ namespace DataLayer.Implementation
                         from u in context.Users
                         where u.Id == id
                         select u;
-                    //IQueryable<Instrumentation.User> query = context.Users.Where(u => u.Id == id);
+                    
+                    return query.FirstOrDefault();
+                });
+
+                return user is not null ? new User(user.Id, user.FirstName, user.LastName) : null;
+            }
+        }
+
+        public async Task<IUser?> GetUserAsyncMethodSyntax(int id)
+        {
+            using (CoffeeShopDataContext context = new CoffeeShopDataContext(this.ConnectionString))
+            {
+                Instrumentation.User? user = await Task.Run(() =>
+                {
+                    IQueryable<Instrumentation.User> query = context.Users.Where(u => u.Id == id);
+
                     return query.FirstOrDefault();
                 });
 
@@ -378,7 +393,7 @@ namespace DataLayer.Implementation
 
         public async Task<bool> CheckIfUserExists(int id)
         {
-            return (await this.GetUserAsync(id)) != null;
+            return (await this.GetUserAsyncQuerySyntax(id)) != null;
         }
 
         public async Task<bool> CheckIfProductExists(int id)

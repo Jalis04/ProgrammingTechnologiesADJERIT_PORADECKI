@@ -22,7 +22,17 @@ namespace DataLayer.Implementation
 
         public async Task<IUser> GetUserAsync(int id)
         {
-            IUser? user = await this._context.GetUserAsync(id);
+            IUser? user = await this._context.GetUserAsyncQuerySyntax(id);
+
+            if (user is null)
+                throw new Exception("This user does not exist!");
+
+            return user;
+        }
+
+        public async Task<IUser> GetUserAsyncMethodSyntax(int id)
+        {
+            IUser? user = await this._context.GetUserAsyncMethodSyntax(id);
 
             if (user is null)
                 throw new Exception("This user does not exist!");

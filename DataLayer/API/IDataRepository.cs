@@ -13,6 +13,7 @@ namespace DataLayer.API
         #region User CRUD
         Task AddUserAsync(int id, string firstName, string lastName);
         Task<IUser> GetUserAsync(int id);
+        Task<IUser> GetUserAsyncMethodSyntax(int id);
         Task UpdateUserAsync(int id, string firstName, string lastName);
         Task DeleteUserAsync(int id);
         Task<Dictionary<int, IUser>> GetAllUsersAsync();
