@@ -12,15 +12,15 @@ public interface IStateModelOperation
         return new StateModelOperation(stateCrud ?? IStateCRUD.CreateStateCRUD());
     }
 
-    Task AddAsync(int stateid, int productId, bool available);
+    Task AddStateAsync(int stateid, int productId, bool available);
 
-    Task<IStateModel> GetAsync(int stateid);
+    Task<IStateModel> GetStateAsync(int stateid);
 
-    Task UpdateAsync(int stateid, int productId, bool available);
+    Task UpdateStateAsync(int stateid, int productId, bool available);
 
-    Task DeleteAsync(int stateid);
+    Task DeleteStateAsync(int stateid);
 
-    Task<Dictionary<int, IStateModel>> GetAllAsync();
+    Task<Dictionary<int, IStateModel>> GetAllStatesAsync();
 
-    Task<int> GetCountAsync();
+    Task<int> GetStatesCountAsync();
 }

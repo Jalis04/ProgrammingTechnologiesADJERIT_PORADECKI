@@ -12,15 +12,15 @@ public interface IProductModelOperation
         return new ProductModelOperation(productCrud ?? IProductCRUD.CreateProductCRUD());
     }
 
-    Task AddAsync(int id, string name, string description, float price);
+    Task AddProductAsync(int id, string name, string description, float price);
 
-    Task<IProductModel> GetAsync(int id);
+    Task<IProductModel> GetProductAsync(int id);
 
-    Task UpdateAsync(int id, string name, string description, float price);
+    Task UpdateProductAsync(int id, string name, string description, float price);
 
-    Task DeleteAsync(int id);
+    Task DeleteProductAsync(int id);
 
-    Task<Dictionary<int, IProductModel>> GetAllAsync();
+    Task<Dictionary<int, IProductModel>> GetAllProductsAsync();
 
-    Task<int> GetCountAsync();
+    Task<int> GetProductsCountAsync();
 }

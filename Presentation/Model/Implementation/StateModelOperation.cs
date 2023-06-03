@@ -16,42 +16,42 @@ internal class StateModelOperation : IStateModelOperation
 
     private IStateModel Map(IStateDTO state)
     {
-        return new StateModel(state.stateId, state.productId, state.available);
+        return new StateModel(state.StateId, state.ProductId, state.Available);
     }
 
-    public async Task AddAsync(int stateId, int productId, bool available)
+    public async Task AddStateAsync(int stateId, int productId, bool available)
     {
         await this._stateCrud.AddStateAsync(stateId, productId, available);
     }
 
-    public async Task<IStateModel> GetAsync(int stateId)
+    public async Task<IStateModel> GetStateAsync(int stateId)
     {
         return this.Map(await this._stateCrud.GetStateAsync(stateId));
     }
 
-    public async Task UpdateAsync(int stateId, int productId, bool available)
+    public async Task UpdateStateAsync(int stateId, int productId, bool available)
     {
         await this._stateCrud.UpdateStateAsync(stateId, productId, available);
     }
 
-    public async Task DeleteAsync(int stateId)
+    public async Task DeleteStateAsync(int stateId)
     {
         await this._stateCrud.DeleteStateAsync(stateId);
     }
 
-    public async Task<Dictionary<int, IStateModel>> GetAllAsync()
+    public async Task<Dictionary<int, IStateModel>> GetAllStatesAsync()
     {
         Dictionary<int, IStateModel> result = new Dictionary<int, IStateModel>();
 
         foreach (IStateDTO state in (await this._stateCrud.GetAllStatesAsync()).Values)
         {
-            result.Add(state.stateId, this.Map(state));
+            result.Add(state.StateId, this.Map(state));
         }
 
         return result;
     }
 
-    public async Task<int> GetCountAsync()
+    public async Task<int> GetStatesCountAsync()
     {
         return await this._stateCrud.GetStatesCountAsync();
     }
