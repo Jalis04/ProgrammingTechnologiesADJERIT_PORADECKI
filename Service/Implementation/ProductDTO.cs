@@ -4,16 +4,16 @@ namespace Service.Implementation;
 
 internal class ProductDTO : IProductDTO
 {
-    public int id { get; set; }
-    public string productName { get; set; }
-    public string productDescription { get; set; }
-    public float price { get; set; }
+    public int Id { get; set; }
+    public string ProductName { get; set; }
+    public string ProductDescription { get; set; }
+    public float Price { get; set; }
 
     public ProductDTO(int id, string productName, string productDescription, float price)
     {
-        this.id = id;
-        this.productName = productName;
-        this.productDescription = productDescription;
-        this.price = price;
+        this.Id = id;
+        this.ProductName = productName;
+        this.ProductDescription = productDescription;
+        this.Price = price;
     }
 }

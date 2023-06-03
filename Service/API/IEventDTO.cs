@@ -2,9 +2,9 @@
 
 public interface IEventDTO
 {
-    int eventId { get; set; }
-    int stateId { get; set; }
-    int userId { get; set; }
-    DateTime eventDate { get; }
-    string type { get; set; }
+    int Id { get; set; }
+    int StateId { get; set; }
+    int UserId { get; set; }
+    DateTime EventDate { get; }
+    string Type { get; set; }
 }

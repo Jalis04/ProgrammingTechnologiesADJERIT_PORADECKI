@@ -2,8 +2,8 @@
 
 public interface IStateDTO
 {
-    int productId { get; set; }
-    int stateId { get; set; }
+    int ProductId { get; set; }
+    int StateId { get; set; }
 
-    bool available { get; set; } 
+    bool Available { get; set; } 
 }
