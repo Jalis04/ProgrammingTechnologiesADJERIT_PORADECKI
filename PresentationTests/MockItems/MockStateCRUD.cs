@@ -1,5 +1,4 @@
-﻿using DataLayer.API;
-using Service.API;
+﻿using Presentation.Model.API;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace PresentationTests.TestItems
 {
-    internal class TestStateCRUD : IStateCRUD
+    internal class MockStateCRUD : IStateModelOperation
     {
-        private readonly TestDataRepository _testRepository = new TestDataRepository();
+        private readonly MockDataRepository _testRepository = new MockDataRepository();
 
-        public TestStateCRUD()
+        public MockStateCRUD()
         {
         }
 
@@ -22,7 +21,7 @@ namespace PresentationTests.TestItems
             await _testRepository.AddStateAsync(id, productId, available);
         }
 
-        public async Task<IStateDTO> GetStateAsync(int id)
+        public async Task<IStateModel> GetStateAsync(int id)
         {
             return await this._testRepository.GetStateAsync(id);
         }
@@ -37,13 +36,13 @@ namespace PresentationTests.TestItems
             await this._testRepository.DeleteStateAsync(id);
         }
 
-        public async Task<Dictionary<int, IStateDTO>> GetAllStatesAsync()
+        public async Task<Dictionary<int, IStateModel>> GetAllStatesAsync()
         {
-            Dictionary<int, IStateDTO> result = new Dictionary<int, IStateDTO>();
+            Dictionary<int, IStateModel> result = new Dictionary<int, IStateModel>();
 
-            foreach (IState state in (await this._testRepository.GetAllStatesAsync()).Values)
+            foreach (IStateModel state in (await this._testRepository.GetAllStatesAsync()).Values)
             {
-                result.Add(state.stateId, (IStateDTO)state);
+                result.Add(state.StateId, (IStateModel)state);
             }
 
             return result;

@@ -1,5 +1,4 @@
-﻿using DataLayer.API;
-using Service.API;
+﻿using Presentation.Model.API;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace PresentationTests.TestItems
 {
-    internal class TestUserCRUD: IUserCRUD
+    internal class MockUserCRUD: IUserModelOperation
     {
-        private readonly TestDataRepository _testRepository = new TestDataRepository();
+        private readonly MockDataRepository _testRepository = new MockDataRepository();
 
-        public TestUserCRUD() { }
+        public MockUserCRUD() { }
 
         public async Task AddUserAsync(int id, string firstName, string lastName)
         {
             await this._testRepository.AddUserAsync(id, firstName, lastName);
         }
 
-        public async Task<IUserDTO> GetUserAsync(int id)
+        public async Task<IUserModel> GetUserAsync(int id)
         {
             return await this._testRepository.GetUserAsync(id);
         }
@@ -34,13 +33,13 @@ namespace PresentationTests.TestItems
             await this._testRepository.DeleteUserAsync(id);
         }
 
-        public async Task<Dictionary<int, IUserDTO>> GetAllUsersAsync()
+        public async Task<Dictionary<int, IUserModel>> GetAllUsersAsync()
         {
-            Dictionary<int, IUserDTO> result = new Dictionary<int, IUserDTO>();
+            Dictionary<int, IUserModel> result = new Dictionary<int, IUserModel>();
 
-            foreach (IUser user in (await this._testRepository.GetAllUsersAsync()).Values)
+            foreach (IUserModel user in (await this._testRepository.GetAllUsersAsync()).Values)
             {
-                result.Add(user.id, (IUserDTO)user);
+                result.Add(user.Id, (IUserModel)user);
             }
 
             return result;

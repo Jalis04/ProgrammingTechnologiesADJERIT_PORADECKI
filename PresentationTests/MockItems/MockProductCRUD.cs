@@ -1,5 +1,4 @@
-﻿using DataLayer.API;
-using Service.API;
+﻿using Presentation.Model.API;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace PresentationTests.TestItems
 {
-    internal class TestProductCRUD : IProductCRUD
+    internal class MockProductCRUD : IProductModelOperation
     {
-        private readonly TestDataRepository _repository = new TestDataRepository();
+        private readonly MockDataRepository _repository = new MockDataRepository();
 
-        public TestProductCRUD()
+        public MockProductCRUD()
         {
         }
 
@@ -21,7 +20,7 @@ namespace PresentationTests.TestItems
             await this._repository.AddProductAsync(id, productName, productDescription, price);
         }
 
-        public async Task<IProductDTO> GetProductAsync(int id)
+        public async Task<IProductModel> GetProductAsync(int id)
         {
             return await this._repository.GetProductAsync(id);
         }
@@ -36,13 +35,13 @@ namespace PresentationTests.TestItems
             await this._repository.DeleteProductAsync(id);
         }
 
-        public async Task<Dictionary<int, IProductDTO>> GetAllProductsAsync()
+        public async Task<Dictionary<int, IProductModel>> GetAllProductsAsync()
         {
-            Dictionary<int, IProductDTO> result = new Dictionary<int, IProductDTO>();
+            Dictionary<int, IProductModel> result = new Dictionary<int, IProductModel>();
 
-            foreach (IProduct product in (await this._repository.GetAllProductsAsync()).Values)
+            foreach (IProductModel product in (await this._repository.GetAllProductsAsync()).Values)
             {
-                result.Add(product.id, (IProductDTO)product);
+                result.Add(product.Id, (IProductModel)product);
             }
 
             return result;

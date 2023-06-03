@@ -1,37 +1,35 @@
-﻿using DataLayer.API;
-using DataLayer.Instrumentation;
-using PresentationTests;
+﻿using PresentationTests;
 using PresentationTests.TestItems;
-using Service.API;
+using Presentation.Model.API;
 
 namespace PresentationTests;
 
-internal class TestDataRepository
+internal class MockDataRepository
 {
-    public Dictionary<int, IUserDTO> Users = new Dictionary<int, IUserDTO>();
+    public Dictionary<int, IUserModel> Users = new Dictionary<int, IUserModel>();
 
-    public Dictionary<int, IProductDTO> Products = new Dictionary<int, IProductDTO>();
+    public Dictionary<int, IProductModel> Products = new Dictionary<int, IProductModel>();
 
-    public Dictionary<int, IEventDTO> Events = new Dictionary<int, IEventDTO>();
+    public Dictionary<int, IEventModel> Events = new Dictionary<int, IEventModel>();
 
-    public Dictionary<int, IStateDTO> States = new Dictionary<int, IStateDTO>();
+    public Dictionary<int, IStateModel> States = new Dictionary<int, IStateModel>();
 
     #region User CRUD
 
     public async Task AddUserAsync(int id, string firstName, string lastName)
     {
-        this.Users.Add(id, new TestUserDTO(id, firstName, lastName));
+        this.Users.Add(id, new MockUserDTO(id, firstName, lastName));
     }
 
-    public async Task<IUserDTO> GetUserAsync(int id)
+    public async Task<IUserModel> GetUserAsync(int id)
     {
         return await Task.FromResult(this.Users[id]);
     }
 
     public async Task UpdateUserAsync(int id, string firstName, string lastName)
     {
-        this.Users[id].firstName = firstName;
-        this.Users[id].firstName = lastName;
+        this.Users[id].FirstName = firstName;
+        this.Users[id].LastName = lastName;
     }
 
     public async Task DeleteUserAsync(int id)
@@ -39,7 +37,7 @@ internal class TestDataRepository
         this.Users.Remove(id);
     }
 
-    public async Task<Dictionary<int, IUserDTO>> GetAllUsersAsync()
+    public async Task<Dictionary<int, IUserModel>> GetAllUsersAsync()
     {
         return await Task.FromResult(this.Users);
     }
@@ -61,19 +59,19 @@ internal class TestDataRepository
 
     public async Task AddProductAsync(int id, string name, string description, float price)
     {
-        this.Products.Add(id, new TestProductDTO(id, name, description, price));
+        this.Products.Add(id, new MockProductDTO(id, name, description, price));
     }
 
-    public async Task<IProductDTO> GetProductAsync(int id)
+    public async Task<IProductModel> GetProductAsync(int id)
     {
         return await Task.FromResult(this.Products[id]);
     }
 
     public async Task UpdateProductAsync(int id, string name, string description, float price)
     {
-        this.Products[id].productName = name;
-        this.Products[id].productDescription = description;
-        this.Products[id].price = price;
+        this.Products[id].ProductName = name;
+        this.Products[id].ProductDescription = description;
+        this.Products[id].Price = price;
     }
 
     public async Task DeleteProductAsync(int id)
@@ -81,7 +79,7 @@ internal class TestDataRepository
         this.Products.Remove(id);
     }
 
-    public async Task<Dictionary<int, IProductDTO>> GetAllProductsAsync()
+    public async Task<Dictionary<int, IProductModel>> GetAllProductsAsync()
     {
         return await Task.FromResult(this.Products);
     }
@@ -98,18 +96,18 @@ internal class TestDataRepository
 
     public async Task AddStateAsync(int id, int productId, bool available)
     {
-        this.States.Add(id, new TestStateDTO(id, productId, available));
+        this.States.Add(id, new MockStateDTO(id, productId, available));
     }
 
-    public async Task<IStateDTO> GetStateAsync(int id)
+    public async Task<IStateModel> GetStateAsync(int id)
     {
         return await Task.FromResult(this.States[id]);
     }
 
     public async Task UpdateStateAsync(int id, int productId, bool available)
     {
-        this.States[id].productId = productId;
-        this.States[id].available = available;
+        this.States[id].ProductId = productId;
+        this.States[id].Available = available;
     }
 
     public async Task DeleteStateAsync(int id)
@@ -117,7 +115,7 @@ internal class TestDataRepository
         this.States.Remove(id);
     }
 
-    public async Task<Dictionary<int, IStateDTO>> GetAllStatesAsync()
+    public async Task<Dictionary<int, IStateModel>> GetAllStatesAsync()
     {
         return await Task.FromResult(this.States);
     }
@@ -134,19 +132,19 @@ internal class TestDataRepository
 
     public async Task AddEventAsync(int id, int stateId, int userId, string type)
     {
-        this.Events.Add(id, new TestEventDTO(id, stateId, userId, type));
+        this.Events.Add(id, new MockEventDTO(id, stateId, userId, type));
     }
 
-    public async Task<IEventDTO> GetEventAsync(int id)
+    public async Task<IEventModel> GetEventAsync(int id)
     {
         return await Task.FromResult(this.Events[id]);
     }
 
     public async Task UpdateEventAsync(int id, int stateId, int userId, string type)
     {
-        ((TestEventDTO)this.Events[id]).stateId = stateId;
-        ((TestEventDTO)this.Events[id]).userId = userId;
-        ((TestEventDTO)this.Events[id]).type = type;
+        ((MockEventDTO)this.Events[id]).StateId = stateId;
+        ((MockEventDTO)this.Events[id]).UserId = userId;
+        ((MockEventDTO)this.Events[id]).Type = type;
     }
 
     public async Task DeleteEventAsync(int id)
@@ -154,7 +152,7 @@ internal class TestDataRepository
         this.Events.Remove(id);
     }
 
-    public async Task<Dictionary<int, IEventDTO>> GetAllEventsAsync()
+    public async Task<Dictionary<int, IEventModel>> GetAllEventsAsync()
     {
         return await Task.FromResult(this.Events);
     }

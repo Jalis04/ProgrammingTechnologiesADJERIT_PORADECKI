@@ -1,18 +1,12 @@
-﻿using DataLayer.API;
-using Service.API;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Presentation.Model.API;
 
 namespace PresentationTests.TestItems
 {
-    internal class TestEventCRUD : IEventCRUD
+    internal class MockEventCRUD : IEventModelOperation
     {
-        private readonly TestDataRepository _testRepository = new TestDataRepository();
+        private readonly MockDataRepository _testRepository = new MockDataRepository();
 
-        public TestEventCRUD()
+        public MockEventCRUD()
         {
         }
 
@@ -21,7 +15,7 @@ namespace PresentationTests.TestItems
             await this._testRepository.AddEventAsync(id, stateId, userId, type);
         }
 
-        public async Task<IEventDTO> GetEventAsync(int id)
+        public async Task<IEventModel> GetEventAsync(int id, string type)
         {
             return await this._testRepository.GetEventAsync(id);
         }
@@ -36,13 +30,13 @@ namespace PresentationTests.TestItems
             await this._testRepository.DeleteEventAsync(id);
         }
 
-        public async Task<Dictionary<int, IEventDTO>> GetAllEventsAsync()
+        public async Task<Dictionary<int, IEventModel>> GetAllEventsAsync()
         {
-            Dictionary<int, IEventDTO> result = new Dictionary<int, IEventDTO>();
+            Dictionary<int, IEventModel> result = new Dictionary<int, IEventModel>();
 
-            foreach (IEvent currentEvent in (await this._testRepository.GetAllEventsAsync()).Values)
+            foreach (IEventModel currentEvent in (await this._testRepository.GetAllEventsAsync()).Values)
             {
-                result.Add(currentEvent.eventId, (IEventDTO)currentEvent);
+                result.Add(currentEvent.Id, (IEventModel)currentEvent);
             }
 
             return result;
