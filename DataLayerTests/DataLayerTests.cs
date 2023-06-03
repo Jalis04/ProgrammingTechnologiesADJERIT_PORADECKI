@@ -38,6 +38,13 @@ namespace DataLayerTests
             Assert.AreEqual("John", user.firstName);
             Assert.AreEqual("Smith", user.lastName);
 
+            user = await _dataRepository.GetUserAsyncMethodSyntax(userId);
+
+            Assert.IsNotNull(user);
+            Assert.AreEqual(userId, user.id);
+            Assert.AreEqual("John", user.firstName);
+            Assert.AreEqual("Smith", user.lastName);
+
             Assert.IsNotNull(await _dataRepository.GetAllUsersAsync());
             Assert.IsTrue(await _dataRepository.GetUsersCountAsync() > 0);
 
