@@ -12,7 +12,7 @@ namespace DataLayer.Implementation
             this.available = available;
         }
 
-        public int productId { get; }
+        public int productId { get; set; }
         public int stateId { get; set; }
 
         public bool available { get; set; }
