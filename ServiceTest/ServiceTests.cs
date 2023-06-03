@@ -1,17 +1,16 @@
 using Service.API;
-using DataLayer.API;
+using ServiceTest.MockItems;
 
 namespace ServiceTest
 {
     [TestClass]
     public class ServiceTests
     {
-        private readonly IDataRepository _repository = new MockDataRepository();
 
         [TestMethod]
         public async Task UserServiceTests()
         {
-            IUserCRUD userCrud = IUserCRUD.CreateUserCRUD(this._repository);
+            IUserCRUD userCrud = new MockUserCRUD();
             //int id, string firstName, string lastName
             await userCrud.AddUserAsync(1, "John", "Doe");
             //int id
@@ -40,7 +39,7 @@ namespace ServiceTest
         [TestMethod]
         public async Task ProductServiceTests()
         {
-            IProductCRUD productCrud = IProductCRUD.CreateProductCRUD(this._repository);
+            IProductCRUD productCrud = new MockProductCRUD();
             //int id, string productName, string productDescription, float price
             await productCrud.AddProductAsync(1, "Black Coffee", "Strong blend", 3.5f);
 
@@ -71,13 +70,13 @@ namespace ServiceTest
         [TestMethod]
         public async Task StateServiceTests()
         {
-            IProductCRUD productCrud = IProductCRUD.CreateProductCRUD(this._repository);
+            IProductCRUD productCrud = new MockProductCRUD();
             //int id, string productName, string productDescription, float price
             await productCrud.AddProductAsync(1, "Black Coffee", "Strong blend", 3.5f);
 
             IProductDTO product = await productCrud.GetProductAsync(1);
 
-            IStateCRUD stateCrud = IStateCRUD.CreateStateCRUD(this._repository);
+            IStateCRUD stateCrud = new MockStateCRUD();
             //int id, int productId
             await stateCrud.AddStateAsync(1, product.Id, true);
 
@@ -104,26 +103,26 @@ namespace ServiceTest
         [TestMethod]
         public async Task PlaceEventServiceTests()
         {
-            IProductCRUD productCrud = IProductCRUD.CreateProductCRUD(this._repository);
+            IProductCRUD productCrud = new MockProductCRUD();
             //int id, string productName, string productDescription, float price
             await productCrud.AddProductAsync(1, "Black Coffee", "Strong blend", 3.5f);
 
             IProductDTO product = await productCrud.GetProductAsync(1);
 
-            IStateCRUD stateCrud = IStateCRUD.CreateStateCRUD(this._repository);
+            IStateCRUD stateCrud = new MockStateCRUD();
             //int id, int productId
             await stateCrud.AddStateAsync(1, product.Id, true);
 
             IStateDTO state = await stateCrud.GetStateAsync(1);
 
-            IUserCRUD userCrud = IUserCRUD.CreateUserCRUD(this._repository);
+            IUserCRUD userCrud = new MockUserCRUD();
 
             //int id, string firstName, string lastName
             await userCrud.AddUserAsync(1, "John", "Doe");
 
             IUserDTO user = await userCrud.GetUserAsync(1);
 
-            IEventCRUD eventCrud = IEventCRUD.CreateEventCRUD(this._repository);
+            IEventCRUD eventCrud = new MockEventCRUD();
             //int id, int stateId, int userId, DateTime occurrenceDate, string type, int quantity = 0
             await eventCrud.AddEventAsync(1, state.StateId, user.Id, "PlacedEvent");
 
@@ -141,26 +140,26 @@ namespace ServiceTest
         [TestMethod]
         public async Task PayedEventServiceTests()
         {
-            IProductCRUD productCrud = IProductCRUD.CreateProductCRUD(this._repository);
+            IProductCRUD productCrud = new MockProductCRUD();
 
             //int id, string productName, string productDescription, float price
             await productCrud.AddProductAsync(1, "Cappucino", "Flavorful", 2);
 
             IProductDTO product = await productCrud.GetProductAsync(1);
 
-            IStateCRUD stateCrud = IStateCRUD.CreateStateCRUD(this._repository);
+            IStateCRUD stateCrud = new MockStateCRUD();
 
             await stateCrud.AddStateAsync(1, product.Id, true);
 
             IStateDTO state = await stateCrud.GetStateAsync(1);
 
-            IUserCRUD userCrud = IUserCRUD.CreateUserCRUD(this._repository);
+            IUserCRUD userCrud = new MockUserCRUD();
 
             await userCrud.AddUserAsync(1, "John", "Doe");
 
             IUserDTO user = await userCrud.GetUserAsync(1);
 
-            IEventCRUD eventCrud = IEventCRUD.CreateEventCRUD(this._repository);
+            IEventCRUD eventCrud = new MockEventCRUD();
 
             await eventCrud.AddEventAsync(1, state.StateId, user.Id, "PlacedEvent");
 
