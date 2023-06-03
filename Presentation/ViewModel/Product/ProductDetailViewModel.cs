@@ -85,7 +85,7 @@ internal class ProductDetailViewModel : IViewModel, IProductDetailViewModel
     {
         Task.Run(() =>
         {
-            this._modelOperation.UpdateAsync(this.Id, this.ProductName, this.Description, this.Price);
+            this._modelOperation.UpdateProductAsync(this.Id, this.ProductName, this.Description, this.Price);
 
             this._informer.InformSuccess("Product successfully updated!");
         });

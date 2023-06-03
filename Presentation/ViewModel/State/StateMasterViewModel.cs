@@ -144,9 +144,9 @@ internal class StateMasterViewModel : IViewModel, IStateMasterViewModel
         {
             try
             {
-                int lastId = await this._modelOperation.GetCountAsync() + 1;
+                int lastId = await this._modelOperation.GetStatesCountAsync() + 1;
 
-                await this._modelOperation.AddAsync(lastId, this.ProductId, this.Available);
+                await this._modelOperation.AddStateAsync(lastId, this.ProductId, this.Available);
 
                 this.LoadStates();
 
@@ -165,7 +165,7 @@ internal class StateMasterViewModel : IViewModel, IStateMasterViewModel
         {
             try
             {
-                await this._modelOperation.DeleteAsync(this.SelectedDetailViewModel.Id);
+                await this._modelOperation.DeleteStateAsync(this.SelectedDetailViewModel.Id);
 
                 this.LoadStates();
 
@@ -180,7 +180,7 @@ internal class StateMasterViewModel : IViewModel, IStateMasterViewModel
 
     private async void LoadStates()
     {
-        Dictionary<int, IStateModel> States = await this._modelOperation.GetAllAsync();
+        Dictionary<int, IStateModel> States = await this._modelOperation.GetAllStatesAsync();
 
         Application.Current.Dispatcher.Invoke(() =>
         {

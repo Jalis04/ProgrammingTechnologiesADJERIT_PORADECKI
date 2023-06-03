@@ -131,9 +131,9 @@ internal class UserMasterViewModel : IViewModel, IUserMasterViewModel
     {
         Task.Run(async () =>
         {
-            int lastId = await this._modelOperation.GetCountAsync() + 1;
+            int lastId = await this._modelOperation.GetUsersCountAsync() + 1;
 
-            await this._modelOperation.AddAsync(lastId, this.FirstName, this.LastName);
+            await this._modelOperation.AddUserAsync(lastId, this.FirstName, this.LastName);
 
             this._informer.InformSuccess("User successfully created!");
 
@@ -147,7 +147,7 @@ internal class UserMasterViewModel : IViewModel, IUserMasterViewModel
         {
             try
             {
-                await this._modelOperation.DeleteAsync(this.SelectedDetailViewModel.Id);
+                await this._modelOperation.DeleteUserAsync(this.SelectedDetailViewModel.Id);
 
                 this._informer.InformSuccess("User successfully deleted!");
 
@@ -162,7 +162,7 @@ internal class UserMasterViewModel : IViewModel, IUserMasterViewModel
 
     private async void LoadUsers()
     {
-        Dictionary<int, IUserModel> Users = await this._modelOperation.GetAllAsync();
+        Dictionary<int, IUserModel> Users = await this._modelOperation.GetAllUsersAsync();
 
         Application.Current.Dispatcher.Invoke(() =>
         {
