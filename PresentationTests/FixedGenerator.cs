@@ -3,7 +3,7 @@ using Presentation.Model.API;
 using Presentation.ViewModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataLayer.Implementation;
-using PresentationTests.TestItems;
+using PresentationTests.MockItems;
 
 namespace PresentationTests;
 

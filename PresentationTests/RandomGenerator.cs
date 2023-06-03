@@ -1,7 +1,7 @@
 ﻿using Presentation;
 using Presentation.Model.API;
 using Presentation.ViewModel;
-using PresentationTests.TestItems;
+using PresentationTests.MockItems;
 
 namespace PresentationTests;
 
