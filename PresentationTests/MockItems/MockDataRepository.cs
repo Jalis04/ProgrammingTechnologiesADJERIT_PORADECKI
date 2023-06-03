@@ -1,8 +1,8 @@
 ﻿using PresentationTests;
-using PresentationTests.TestItems;
+using PresentationTests.MockItems;
 using Presentation.Model.API;
 
-namespace PresentationTests;
+namespace PresentationTests.MockItems;
 
 internal class MockDataRepository
 {

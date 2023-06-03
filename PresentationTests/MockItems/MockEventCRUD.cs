@@ -1,6 +1,6 @@
 ﻿using Presentation.Model.API;
 
-namespace PresentationTests.TestItems
+namespace PresentationTests.MockItems
 {
     internal class MockEventCRUD : IEventModelOperation
     {

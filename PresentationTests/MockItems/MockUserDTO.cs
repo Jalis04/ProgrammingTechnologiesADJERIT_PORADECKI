@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PresentationTests.TestItems
+namespace PresentationTests.MockItems
 {
     internal class MockUserDTO : IUserModel
     {
