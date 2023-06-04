@@ -99,7 +99,7 @@ internal class EventDetailViewModel : IViewModel, IEventDetailViewModel
     {
         Task.Run(async () =>
         {
-            await this._modelOperation.UpdateAsync(this.Id, this.StateId, this.UserId, this.Type);
+            await this._modelOperation.UpdateEventAsync(this.Id, this.StateId, this.UserId, this.Type);
 
             this._informer.InformSuccess("Event successfully updated!");
         });

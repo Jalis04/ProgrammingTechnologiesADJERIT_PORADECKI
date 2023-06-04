@@ -1,7 +1,7 @@
 ﻿using Presentation;
 using Presentation.Model.API;
 using Presentation.ViewModel;
-using PresentationTests.TestItems;
+using PresentationTests.MockItems;
 
 namespace PresentationTests;
 
@@ -11,7 +11,7 @@ internal class RandomGenerator : IGenerator
 
     public void GenerateUserModels(IUserMasterViewModel viewModel)
     {
-        IUserModelOperation operation = IUserModelOperation.CreateModelOperation(new TestUserCRUD());
+        IUserModelOperation operation = new MockUserCRUD();
 
         for (int i = 1; i <= 10; i++)
         {
@@ -21,7 +21,7 @@ internal class RandomGenerator : IGenerator
 
     public void GenerateProductModels(IProductMasterViewModel viewModel)
     {
-        IProductModelOperation operation = IProductModelOperation.CreateModelOperation(new TestProductCRUD());
+        IProductModelOperation operation = new MockProductCRUD();
 
         for (int i = 1; i <= 10; i++)
         {
@@ -31,7 +31,7 @@ internal class RandomGenerator : IGenerator
 
     public void GenerateStateModels(IStateMasterViewModel viewModel)
     {
-        IStateModelOperation operation = IStateModelOperation.CreateModelOperation(new TestStateCRUD());
+        IStateModelOperation operation = new MockStateCRUD();
 
         for (int i = 1; i <= 10; i++)
         {
@@ -41,7 +41,7 @@ internal class RandomGenerator : IGenerator
 
     public void GenerateEventModels(IEventMasterViewModel viewModel)
     {
-        IEventModelOperation operation = IEventModelOperation.CreateModelOperation(new TestEventCRUD());
+        IEventModelOperation operation = new MockEventCRUD();
 
         for (int i = 1; i <= 10; i++)
         {

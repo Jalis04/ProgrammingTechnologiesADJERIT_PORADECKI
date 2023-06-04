@@ -2,7 +2,7 @@
 
 public interface IUserDTO
 {
-    string firstName { get; set; }
-    string lastName { get; set; }
-    int id { get; set; }
+    string FirstName { get; set; }
+    string LastName { get; set; }
+    int Id { get; set; }
 }

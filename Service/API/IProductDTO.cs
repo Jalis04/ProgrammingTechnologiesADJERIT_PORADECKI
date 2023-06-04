@@ -2,8 +2,8 @@
 
 public interface IProductDTO
 {
-    int id { get; set; }
-    string productName { get; set; }
-    string productDescription { get; set; }
-    float price { get; set; }
+    int Id { get; set; }
+    string ProductName { get; set; }
+    string ProductDescription { get; set; }
+    float Price { get; set; }
 }

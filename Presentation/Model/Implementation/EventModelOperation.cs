@@ -17,42 +17,42 @@ internal class EventModelOperation : IEventModelOperation
 
     private IEventModel Map(IEventDTO even)
     {
-        return new EventModel(even.eventId, even.stateId, even.userId, even.type);
+        return new EventModel(even.Id, even.StateId, even.UserId, even.Type);
     }
 
-    public async Task AddAsync(int id, int stateId, int userId, string type)
+    public async Task AddEventAsync(int id, int stateId, int userId, string type)
     {
         await this._eventCRUD.AddEventAsync(id, stateId, userId, type);
     }
 
-    public async Task<IEventModel> GetAsync(int id, string type)
+    public async Task<IEventModel> GetEventAsync(int id, string type)
     {
         return this.Map(await this._eventCRUD.GetEventAsync(id));
     }
 
-    public async Task UpdateAsync(int id, int stateId, int userId, string type)
+    public async Task UpdateEventAsync(int id, int stateId, int userId, string type)
     {
         await this._eventCRUD.UpdateEventAsync(id, stateId, userId, type);
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task DeleteEventAsync(int id)
     {
         await this._eventCRUD.DeleteEventAsync(id);
     }
 
-    public async Task<Dictionary<int, IEventModel>> GetAllAsync()
+    public async Task<Dictionary<int, IEventModel>> GetAllEventsAsync()
     {
         Dictionary<int, IEventModel> result = new Dictionary<int, IEventModel>();
 
         foreach (IEventDTO even in (await this._eventCRUD.GetAllEventsAsync()).Values)
         {
-            result.Add(even.eventId, this.Map(even));
+            result.Add(even.Id, this.Map(even));
         }
 
         return result;
     }
 
-    public async Task<int> GetCountAsync()
+    public async Task<int> GetEventsCountAsync()
     {
         return await this._eventCRUD.GetEventsCountAsync();
     }

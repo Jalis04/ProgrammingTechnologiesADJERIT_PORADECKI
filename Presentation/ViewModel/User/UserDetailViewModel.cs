@@ -72,7 +72,7 @@ internal class UserDetailViewModel : IViewModel, IUserDetailViewModel
     {
         Task.Run(() =>
         {
-            this._modelOperation.UpdateAsync(this.Id, this.FirstName, this.LastName);
+            this._modelOperation.UpdateUserAsync(this.Id, this.FirstName, this.LastName);
 
             this._informer.InformSuccess("User successfully updated!");
         });

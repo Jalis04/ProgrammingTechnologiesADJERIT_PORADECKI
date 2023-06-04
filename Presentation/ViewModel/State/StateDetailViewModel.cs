@@ -72,7 +72,7 @@ internal class StateDetailViewModel : IViewModel, IStateDetailViewModel
     {
         Task.Run(() =>
         {
-            this._modelOperation.UpdateAsync(this.Id, this.ProductId, this.Available);
+            this._modelOperation.UpdateStateAsync(this.Id, this.ProductId, this.Available);
 
             this._informer.InformSuccess("State successfully updated!");
         });

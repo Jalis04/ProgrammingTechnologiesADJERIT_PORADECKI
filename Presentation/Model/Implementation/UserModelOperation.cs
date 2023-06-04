@@ -17,42 +17,42 @@ internal class UserModelOperation : IUserModelOperation
 
     private IUserModel Map(IUserDTO user)
     {
-        return new UserModel(user.id, user.firstName, user.lastName);
+        return new UserModel(user.Id, user.FirstName, user.LastName);
     }
 
-    public async Task AddAsync(int id, string firstName, string lastName)
+    public async Task AddUserAsync(int id, string firstName, string lastName)
     {
         await this._userCRUD.AddUserAsync(id, firstName, lastName);
     }
 
-    public async Task<IUserModel> GetAsync(int id)
+    public async Task<IUserModel> GetUserAsync(int id)
     {
         return this.Map(await this._userCRUD.GetUserAsync(id));
     }
 
-    public async Task UpdateAsync(int id, string firstName, string lastName)
+    public async Task UpdateUserAsync(int id, string firstName, string lastName)
     {
         await this._userCRUD.UpdateUserAsync(id, firstName, lastName);
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task DeleteUserAsync(int id)
     {
         await this._userCRUD.DeleteUserAsync(id);
     }
 
-    public async Task<Dictionary<int, IUserModel>> GetAllAsync()
+    public async Task<Dictionary<int, IUserModel>> GetAllUsersAsync()
     {
         Dictionary<int, IUserModel> result = new Dictionary<int, IUserModel>();
 
         foreach (IUserDTO user in (await this._userCRUD.GetAllUsersAsync()).Values)
         {
-            result.Add(user.id, this.Map(user));
+            result.Add(user.Id, this.Map(user));
         }
 
         return result;
     }
 
-    public async Task<int> GetCountAsync()
+    public async Task<int> GetUsersCountAsync()
     {
         return await this._userCRUD.GetUsersCountAsync();
     }

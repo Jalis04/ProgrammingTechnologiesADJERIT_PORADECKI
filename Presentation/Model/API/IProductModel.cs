@@ -1,4 +1,6 @@
-﻿namespace Presentation.Model.API;
+﻿using Service.API;
+
+namespace Presentation.Model.API;
 
 public interface IProductModel
 {

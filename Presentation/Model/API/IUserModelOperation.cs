@@ -1,27 +1,24 @@
-﻿using Service.API;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System;
-using Presentation.Model.Implementation;
+﻿using Presentation.Model.Implementation;
+using Service.API;
 
 namespace Presentation.Model.API;
 
 public interface IUserModelOperation
 {
-    static IUserModelOperation CreateModelOperation(IUserCRUD? userCrud = null)
+    static IUserModelOperation CreateModelOperation(IUserCRUD userCrud = null)
     {
         return new UserModelOperation(userCrud);
     }
 
-    Task AddAsync(int id, string firstName, string lastName);
+    Task AddUserAsync(int id, string firstName, string lastName);
 
-    Task<IUserModel> GetAsync(int id);
+    Task<IUserModel> GetUserAsync(int id);
 
-    Task UpdateAsync(int id, string firstName, string lastName);
+    Task UpdateUserAsync(int id, string firstName, string lastName);
 
-    Task DeleteAsync(int id);
+    Task DeleteUserAsync(int id);
 
-    Task<Dictionary<int, IUserModel>> GetAllAsync();
+    Task<Dictionary<int, IUserModel>> GetAllUsersAsync();
 
-    Task<int> GetCountAsync();
+    Task<int> GetUsersCountAsync();
 }

@@ -7,7 +7,7 @@ public interface IEventCRUD
 {
     static IEventCRUD CreateEventCRUD(IDataRepository? dataRepository = null)
     {
-        return new EventCRUD(dataRepository ?? IDataRepository.CreateDatabase());
+        return new EventCRUD(dataRepository ?? IDataRepository.CreateDatabase(ConnectionString.GetConnectionString()));
     }
 
     Task AddEventAsync(int id, int stateId, int userId, string type);

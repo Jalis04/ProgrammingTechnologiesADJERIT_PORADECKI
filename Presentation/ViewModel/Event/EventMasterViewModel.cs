@@ -144,9 +144,9 @@ internal class EventMasterViewModel : IViewModel, IEventMasterViewModel
         {
             try
             {
-                int lastId = await this._modelOperation.GetCountAsync() + 1;
+                int lastId = await this._modelOperation.GetEventsCountAsync() + 1;
 
-                await this._modelOperation.AddAsync(lastId, this.StateId, this.UserId, "PlacedEvent");
+                await this._modelOperation.AddEventAsync(lastId, this.StateId, this.UserId, "PlacedEvent");
 
                 this.LoadEvents();
 
@@ -163,9 +163,9 @@ internal class EventMasterViewModel : IViewModel, IEventMasterViewModel
     {
         Task.Run(async () =>
         {
-            int lastId = await this._modelOperation.GetCountAsync() + 1;
+            int lastId = await this._modelOperation.GetEventsCountAsync() + 1;
 
-            await this._modelOperation.AddAsync(lastId, this.StateId, this.UserId, "PayedEvent");
+            await this._modelOperation.AddEventAsync(lastId, this.StateId, this.UserId, "PayedEvent");
 
             this.LoadEvents();
 
@@ -177,7 +177,7 @@ internal class EventMasterViewModel : IViewModel, IEventMasterViewModel
     {
         Task.Run(async () =>
         {
-            await this._modelOperation.DeleteAsync(this.SelectedDetailViewModel.Id);
+            await this._modelOperation.DeleteEventAsync(this.SelectedDetailViewModel.Id);
 
             this.LoadEvents();
 
@@ -187,7 +187,7 @@ internal class EventMasterViewModel : IViewModel, IEventMasterViewModel
 
     private async void LoadEvents()
     {
-        Dictionary<int, IEventModel> Events = (await this._modelOperation.GetAllAsync());
+        Dictionary<int, IEventModel> Events = (await this._modelOperation.GetAllEventsAsync());
 
         Application.Current.Dispatcher.Invoke(() =>
         {

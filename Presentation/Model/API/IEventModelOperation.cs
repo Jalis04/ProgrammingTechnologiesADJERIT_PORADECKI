@@ -13,15 +13,15 @@ public interface IEventModelOperation
         return new EventModelOperation(eventCrud ?? IEventCRUD.CreateEventCRUD());
     }
 
-    Task AddAsync(int id, int stateId, int userId, string type);
+    Task AddEventAsync(int id, int stateId, int userId, string type);
 
-    Task<IEventModel> GetAsync(int id, string type);
+    Task<IEventModel> GetEventAsync(int id, string type);
 
-    Task UpdateAsync(int id, int stateId, int userId, string type);
+    Task UpdateEventAsync(int id, int stateId, int userId, string type);
 
-    Task DeleteAsync(int id);
+    Task DeleteEventAsync(int id);
 
-    Task<Dictionary<int, IEventModel>> GetAllAsync();
+    Task<Dictionary<int, IEventModel>> GetAllEventsAsync();
 
-    Task<int> GetCountAsync();
+    Task<int> GetEventsCountAsync();
 }

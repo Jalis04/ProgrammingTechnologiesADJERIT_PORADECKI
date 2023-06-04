@@ -8,7 +8,7 @@ public interface IProductCRUD
 {
     static IProductCRUD CreateProductCRUD(IDataRepository? dataRepository = null)
     {
-        return new ProductCRUD(dataRepository ?? IDataRepository.CreateDatabase());
+        return new ProductCRUD(dataRepository ?? IDataRepository.CreateDatabase(ConnectionString.GetConnectionString()));
     }
 
     Task AddProductAsync(int id, string productName, string productDescription, float price);

@@ -145,9 +145,9 @@ internal class ProductMasterViewModel : IViewModel, IProductMasterViewModel
     {
         Task.Run(async () =>
         {
-            int lastId = await this._modelOperation.GetCountAsync() + 1;
+            int lastId = await this._modelOperation.GetProductsCountAsync() + 1;
 
-            await this._modelOperation.AddAsync(lastId, this.Name, this.Description, this.Price);
+            await this._modelOperation.AddProductAsync(lastId, this.Name, this.Description, this.Price);
 
             this.LoadProducts();
 
@@ -162,7 +162,7 @@ internal class ProductMasterViewModel : IViewModel, IProductMasterViewModel
         {
             try
             {
-                await this._modelOperation.DeleteAsync(this.SelectedDetailViewModel.Id);
+                await this._modelOperation.DeleteProductAsync(this.SelectedDetailViewModel.Id);
 
                 this.LoadProducts();
 
@@ -177,7 +177,7 @@ internal class ProductMasterViewModel : IViewModel, IProductMasterViewModel
 
     private async void LoadProducts()
     {
-        Dictionary<int, IProductModel> Products = await this._modelOperation.GetAllAsync();
+        Dictionary<int, IProductModel> Products = await this._modelOperation.GetAllProductsAsync();
 
         Application.Current.Dispatcher.Invoke(() =>
         {

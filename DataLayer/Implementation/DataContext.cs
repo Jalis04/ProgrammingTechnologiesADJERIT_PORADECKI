@@ -8,18 +8,7 @@ namespace DataLayer.Implementation
     {
         public DataContext(string? connectionString = null)
         {
-            if (connectionString is null)
-            {
-                string _projectRootDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
-                string _DBRelativePath = @"DataLayer\Instrumentation\CoffeeShopDB.mdf";
-                string _DBPath = Path.Combine(_projectRootDir, _DBRelativePath);
-                System.Console.WriteLine(_DBPath);
-                this.ConnectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={_DBPath};Integrated Security = True; Connect Timeout = 30;";
-            }
-            else
-            {
-                this.ConnectionString = connectionString;
-            }
+            this.ConnectionString = connectionString;
         }
 
         private readonly string ConnectionString;
@@ -44,7 +33,7 @@ namespace DataLayer.Implementation
             }
         }
 
-        public async Task<IUser?> GetUserAsync(int id)
+        public async Task<IUser?> GetUserAsyncQuerySyntax(int id)
         {
             using (CoffeeShopDataContext context = new CoffeeShopDataContext(this.ConnectionString))
             {
@@ -54,6 +43,21 @@ namespace DataLayer.Implementation
                         from u in context.Users
                         where u.Id == id
                         select u;
+                    
+                    return query.FirstOrDefault();
+                });
+
+                return user is not null ? new User(user.Id, user.FirstName, user.LastName) : null;
+            }
+        }
+
+        public async Task<IUser?> GetUserAsyncMethodSyntax(int id)
+        {
+            using (CoffeeShopDataContext context = new CoffeeShopDataContext(this.ConnectionString))
+            {
+                Instrumentation.User? user = await Task.Run(() =>
+                {
+                    IQueryable<Instrumentation.User> query = context.Users.Where(u => u.Id == id);
 
                     return query.FirstOrDefault();
                 });
@@ -378,7 +382,7 @@ namespace DataLayer.Implementation
 
         public async Task<bool> CheckIfUserExists(int id)
         {
-            return (await this.GetUserAsync(id)) != null;
+            return (await this.GetUserAsyncQuerySyntax(id)) != null;
         }
 
         public async Task<bool> CheckIfProductExists(int id)

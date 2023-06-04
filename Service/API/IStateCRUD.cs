@@ -8,7 +8,7 @@ public interface IStateCRUD
 {
     static IStateCRUD CreateStateCRUD(IDataRepository? dataRepository = null)
     {
-        return new StateCRUD(dataRepository ?? IDataRepository.CreateDatabase());
+        return new StateCRUD(dataRepository ?? IDataRepository.CreateDatabase(ConnectionString.GetConnectionString()));
     }
 
     Task AddStateAsync(int id, int productId, bool available);
