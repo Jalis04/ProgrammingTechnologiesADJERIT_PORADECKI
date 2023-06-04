@@ -11,7 +11,7 @@ namespace DataLayerTests
     {
         private static string testConnectionString;
 
-        private readonly IDataRepository _dataRepository = IDataRepository.CreateDatabase(IDataContext.CreateContext(testConnectionString));
+        private readonly IDataRepository _dataRepository = IDataRepository.CreateDatabase(testConnectionString);
 
         [ClassInitialize]
         public static void InitializeDataLayerTests(TestContext context)

@@ -9,7 +9,7 @@ public interface IUserCRUD
 {
     static IUserCRUD CreateUserCRUD(IDataRepository? dataRepository = null)
     {
-        return new UserCRUD(dataRepository ?? IDataRepository.CreateDatabase());
+        return new UserCRUD(dataRepository ?? IDataRepository.CreateDatabase(ConnectionString.GetConnectionString()));
     }
 
     Task AddUserAsync(int id, string firstName, string lastName);

@@ -5,9 +5,9 @@ namespace DataLayer.API
 {   //We store all data manipulation methods here for use with Dependency Injection
     public interface IDataRepository
     {
-        static IDataRepository CreateDatabase(IDataContext? dataContext = null)
+        static IDataRepository CreateDatabase(string connectionString)
         {
-            return new DataRepository(dataContext ?? new DataContext());
+            return new DataRepository(new DataContext(connectionString));
         }
 
         #region User CRUD

@@ -8,18 +8,7 @@ namespace DataLayer.Implementation
     {
         public DataContext(string? connectionString = null)
         {
-            if (connectionString is null)
-            {
-                string _projectRootDir = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
-                string _DBRelativePath = @"DataLayer\Instrumentation\CoffeeShopDB.mdf";
-                string _DBPath = Path.Combine(_projectRootDir, _DBRelativePath);
-                System.Console.WriteLine(_DBPath);
-                this.ConnectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={_DBPath};Integrated Security = True; Connect Timeout = 30;";
-            }
-            else
-            {
-                this.ConnectionString = connectionString;
-            }
+            this.ConnectionString = connectionString;
         }
 
         private readonly string ConnectionString;
