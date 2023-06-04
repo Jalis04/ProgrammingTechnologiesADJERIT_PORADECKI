@@ -178,7 +178,6 @@ public class PresentationTests
     {
         IGenerator randomGenerator = new RandomGenerator();
 
-        IUserModelOperation userCrud = new MockUserCRUD();
         IUserModelOperation userOperation = new MockUserCRUD();
         IUserMasterViewModel userViewModel = IUserMasterViewModel.CreateViewModel(userOperation, _informer);
 
