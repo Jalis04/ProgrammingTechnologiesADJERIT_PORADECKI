@@ -1,4 +1,4 @@
-﻿namespace Presentation;
+﻿namespace Presentation.Model.API;
 
 public interface IErrorInformer
 {
