@@ -1,6 +1,4 @@
-﻿using PresentationTests;
-using PresentationTests.MockItems;
-using Presentation.Model.API;
+﻿using Presentation.Model.API;
 
 namespace PresentationTests.MockItems;
 
